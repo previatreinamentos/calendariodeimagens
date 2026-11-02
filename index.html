@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -9,10 +9,12 @@
     :root {
       --bg: #141414;
       --card-bg: #1f1f1f;
+      --panel-bg: #1a1a1a;
       --accent: #E50914;
       --share-btn: #25D366;
       --text: #ffffff;
       --text-muted: #8c8c8c;
+      --border: #333333;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -29,7 +31,7 @@
       align-items: center;
       margin-bottom: 16px;
       padding-bottom: 10px;
-      border-bottom: 1px solid #2f2f2f;
+      border-bottom: 1px solid var(--border);
     }
     header h1 { font-size: 1.2rem; }
     .badge {
@@ -54,7 +56,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      border: 1px solid #2a2a2a;
+      border: 1px solid var(--border);
       min-height: 150px;
       cursor: pointer;
     }
@@ -98,67 +100,147 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.96);
+      background: rgba(0,0,0,0.97);
       z-index: 1000;
-      flex-direction: column;
-      padding: 10px;
+      flex-direction: row;
     }
-    .editor-header {
+
+    /* Barra Lateral Esquerda */
+    .sidebar {
+      width: 320px;
+      max-width: 90vw;
+      background: var(--panel-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      overflow-y: auto;
+      gap: 14px;
+      z-index: 1001;
+    }
+
+    .sidebar h2 {
+      font-size: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .toolbar {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    button {
-      background: #333;
-      color: #fff;
-      border: 1px solid #444;
-      padding: 6px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.78rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    button:hover { background: #444; }
-    button.btn-accent { background: var(--accent); border-color: var(--accent); }
-    button.btn-share { background: #128C7E; border-color: #128C7E; }
-    
-    .color-palette {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      background: #222;
-      padding: 2px 6px;
-      border-radius: 4px;
-      border: 1px solid #444;
-    }
-    .color-btn {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1px solid #555;
-      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
     }
 
+    .sidebar .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .sidebar-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-section label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-section input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      background: #252525;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 0.88rem;
+    }
+
+    .sidebar-section input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .color-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #555;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .color-btn:hover {
+      transform: scale(1.15);
+      border-color: #fff;
+    }
+
+    .action-buttons {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    button.btn {
+      padding: 10px;
+      border-radius: 4px;
+      border: none;
+      font-weight: bold;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    button.btn-accent { background: var(--accent); color: #fff; }
+    button.btn-share { background: var(--share-btn); color: #fff; }
+    button.btn-sec { background: #333; color: #ccc; }
+    button.btn:hover { opacity: 0.9; }
+
+    /* Área Central de Visualização / Canvas */
     .editor-body {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: auto;
-      background: #0a0a0a;
-      border-radius: 6px;
-      padding: 4px;
+      background: #0d0d0d;
+      padding: 12px;
+    }
+
+    /* Responsivo para Celular: painel fica na base como gaveta */
+    @media (max-width: 768px) {
+      #modalEditor {
+        flex-direction: column-reverse;
+      }
+      .sidebar {
+        width: 100%;
+        max-width: 100%;
+        max-height: 52vh;
+        border-right: none;
+        border-top: 1px solid var(--border);
+      }
+      .editor-body {
+        flex: 1;
+        max-height: 48vh;
+      }
     }
   </style>
 </head>
@@ -171,29 +253,61 @@
 
   <div id="grade" class="grid-calendario"></div>
 
-  <!-- MODAL DO EDITOR -->
+  <!-- MODAL DO EDITOR COM BARRA LATERAL -->
   <div id="modalEditor">
-    <div class="editor-header">
-      <div class="toolbar">
-        <button onclick="adicionarTextoTopo()">🔤 Texto Topo</button>
-        <button onclick="adicionarWhatsAppEmbaixo()">📞 WhatsApp</button>
-        
-        <div class="color-palette">
-          <div class="color-btn" style="background: #ffffff;" title="Branco" onclick="aplicarCor('#ffffff')"></div>
-          <div class="color-btn" style="background: #ffeb3b;" title="Amarelo" onclick="aplicarCor('#ffeb3b')"></div>
-          <div class="color-btn" style="background: #25D366;" title="Verde" onclick="aplicarCor('#25D366')"></div>
-          <div class="color-btn" style="background: #00e5ff;" title="Ciano" onclick="aplicarCor('#00e5ff')"></div>
-          <div class="color-btn" style="background: #ff1744;" title="Vermelho" onclick="aplicarCor('#ff1744')"></div>
-        </div>
+    <!-- LATERAL ESQUERDA: TODAS AS CONFIGURAÇÕES -->
+    <div class="sidebar">
+      <h2>
+        <span>Personalizar Arte</span>
+        <button class="close-btn" onclick="fecharEditor()" title="Fechar">✕</button>
+      </h2>
 
-        <button onclick="removerSelecionado()" style="color: #ff6b6b;">🗑️ Eliminar</button>
+      <!-- Texto Superior -->
+      <div class="sidebar-section">
+        <label>Texto da Faixa Superior</label>
+        <input type="text" id="inputTextoTopo" value="SEU TEXTO PRINCIPAL AQUI" oninput="atualizarTextoTopo(this.value)">
       </div>
-      <div class="toolbar">
-        <button class="btn-share" onclick="compartilharOuBaixar()">📲 Partilhar</button>
-        <button class="btn-accent" onclick="baixarImagemFinal()">💾 Descarregar</button>
-        <button onclick="fecharEditor()">✕ Sair</button>
+
+      <!-- Telefone / WhatsApp -->
+      <div class="sidebar-section">
+        <label>Telefone / WhatsApp Inferior</label>
+        <input type="text" id="inputTelefone" value="(81) 99437-0775" oninput="atualizarTelefone(this.value)">
+      </div>
+
+      <!-- Seletor de Cores da Faixa -->
+      <div class="sidebar-section">
+        <label>Cor das Faixas (Superior e Inferior)</label>
+        <div class="color-row">
+          <div class="color-btn" style="background: rgba(0,0,0,0.85);" title="Preto Sólido" onclick="alterarCorFaixas('rgba(0,0,0,0.88)')"></div>
+          <div class="color-btn" style="background: #E50914;" title="Vermelho" onclick="alterarCorFaixas('#E50914')"></div>
+          <div class="color-btn" style="background: #ffeb3b;" title="Amarelo" onclick="alterarCorFaixas('#ffeb3b')"></div>
+          <div class="color-btn" style="background: #007bff;" title="Azul" onclick="alterarCorFaixas('#007bff')"></div>
+          <div class="color-btn" style="background: #128C7E;" title="Verde Escuro" onclick="alterarCorFaixas('#128C7E')"></div>
+          <div class="color-btn" style="background: #ffffff;" title="Branco" onclick="alterarCorFaixas('#ffffff')"></div>
+        </div>
+      </div>
+
+      <!-- Seletor de Cores dos Textos -->
+      <div class="sidebar-section">
+        <label>Cor das Letras</label>
+        <div class="color-row">
+          <div class="color-btn" style="background: #ffffff;" title="Branco" onclick="alterarCorLetras('#ffffff')"></div>
+          <div class="color-btn" style="background: #ffeb3b;" title="Amarelo" onclick="alterarCorLetras('#ffeb3b')"></div>
+          <div class="color-btn" style="background: #25D366;" title="Verde" onclick="alterarCorLetras('#25D366')"></div>
+          <div class="color-btn" style="background: #00e5ff;" title="Ciano" onclick="alterarCorLetras('#00e5ff')"></div>
+          <div class="color-btn" style="background: #111111;" title="Preto" onclick="alterarCorLetras('#111111')"></div>
+        </div>
+      </div>
+
+      <!-- Ações Finais -->
+      <div class="action-buttons">
+        <button class="btn btn-share" onclick="compartilharOuBaixar()">📲 Compartilhar Arte</button>
+        <button class="btn btn-accent" onclick="baixarImagemFinal()">💾 Baixar no Celular / PC</button>
+        <button class="btn btn-sec" onclick="fecharEditor()">Voltar ao Calendário</button>
       </div>
     </div>
+
+    <!-- ÁREA DO CANVAS -->
     <div class="editor-body">
       <canvas id="canvasFabric"></canvas>
     </div>
@@ -202,6 +316,7 @@
   <script>
     let canvas;
     let nomeArquivoAtual = 'arte-editada.png';
+    let faixaTopoObj, faixaBaseObj, textoTopoObj, grupoWhatsAppObj, textoTelefoneObj;
 
     const svgWhatsApp = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -213,7 +328,7 @@
     const mesAtual = hoje.getMonth() + 1;
     const mesFormatado = String(mesAtual).padStart(2, '0');
     const totalDias = new Date(anoAtual, mesAtual, 0).getDate();
-    const nomeMes = hoje.toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' });
+    const nomeMes = hoje.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
     window.onload = function() {
       canvas = new fabric.Canvas('canvasFabric');
@@ -229,8 +344,6 @@
       for (let dia = 1; dia <= totalDias; dia++) {
         const diaZero = String(dia).padStart(2, '0');
         const baseNome = `${anoAtual}-${mesFormatado}-${diaZero}`;
-
-        // Variações automáticas para carregar mesmo se vier .jpg, .jpg.jpg, .png ou .jpeg
         const extensoes = ['.jpg.jpg', '.jpg', '.jpeg', '.png'];
 
         const card = document.createElement('div');
@@ -273,8 +386,8 @@
 
         document.getElementById('modalEditor').style.display = 'flex';
 
-        const maxW = window.innerWidth * 0.92;
-        const maxH = window.innerHeight * 0.70;
+        const maxW = window.innerWidth > 768 ? (window.innerWidth - 360) : window.innerWidth * 0.94;
+        const maxH = window.innerHeight > 768 ? (window.innerHeight * 0.88) : (window.innerHeight * 0.44);
         let escala = Math.min(maxW / img.width, maxH / img.height, 1);
 
         canvas.setWidth(img.width * escala);
@@ -289,90 +402,115 @@
 
         canvas.clear();
         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        canvas.renderAll();
 
-        adicionarTextoTopo();
-        adicionarWhatsAppEmbaixo();
+        construirEstruturaPadrao();
       });
+    }
+
+    function construirEstruturaPadrao() {
+      const alturaFaixa = Math.max(canvas.height * 0.11, 46);
+      const corFaixaPadrao = 'rgba(0,0,0,0.85)';
+
+      // 1. Faixa Superior
+      faixaTopoObj = new fabric.Rect({
+        left: 0,
+        top: 0,
+        width: canvas.width,
+        height: alturaFaixa,
+        fill: corFaixaPadrao,
+        selectable: true,
+        lockMovementX: true,
+        lockMovementY: true
+      });
+      canvas.add(faixaTopoObj);
+
+      // 2. Texto da Faixa Superior
+      const textoTopoValor = document.getElementById('inputTextoTopo').value;
+      textoTopoObj = new fabric.IText(textoTopoValor, {
+        fontFamily: 'Impact, Arial Black, sans-serif',
+        fontSize: Math.max(alturaFaixa * 0.46, 18),
+        fill: '#ffffff',
+        textAlign: 'center',
+        shadow: 'rgba(0,0,0,0.8) 1px 1px 4px'
+      });
+      canvas.add(textoTopoObj);
+      textoTopoObj.centerH();
+      textoTopoObj.set({ top: (alturaFaixa - textoTopoObj.height) / 2 });
+
+      // 3. Faixa Inferior
+      faixaBaseObj = new fabric.Rect({
+        left: 0,
+        top: canvas.height - alturaFaixa,
+        width: canvas.width,
+        height: alturaFaixa,
+        fill: corFaixaPadrao,
+        selectable: true,
+        lockMovementX: true,
+        lockMovementY: true
+      });
+      canvas.add(faixaBaseObj);
+
+      // 4. WhatsApp + Telefone
+      const telefoneValor = document.getElementById('inputTelefone').value;
+      fabric.loadSVGFromString(svgWhatsApp, function(objects, options) {
+        const icone = fabric.util.groupSVGElements(objects, options);
+        icone.scaleToWidth(alturaFaixa * 0.52);
+
+        textoTelefoneObj = new fabric.IText(telefoneValor, {
+          fontFamily: 'Arial, sans-serif',
+          fontWeight: 'bold',
+          fontSize: Math.max(alturaFaixa * 0.42, 17),
+          fill: '#ffffff',
+          left: icone.getScaledWidth() + 8,
+          top: 1
+        });
+
+        grupoWhatsAppObj = new fabric.Group([icone, textoTelefoneObj], {
+          shadow: 'rgba(0,0,0,0.6) 0px 2px 5px'
+        });
+
+        canvas.add(grupoWhatsAppObj);
+        grupoWhatsAppObj.centerH();
+        grupoWhatsAppObj.set({ top: (canvas.height - alturaFaixa) + (alturaFaixa - grupoWhatsAppObj.height) / 2 });
+        canvas.renderAll();
+      });
+    }
+
+    function atualizarTextoTopo(valor) {
+      if (textoTopoObj) {
+        textoTopoObj.set('text', valor);
+        textoTopoObj.centerH();
+        canvas.renderAll();
+      }
+    }
+
+    function atualizarTelefone(valor) {
+      if (textoTelefoneObj && grupoWhatsAppObj) {
+        textoTelefoneObj.set('text', valor);
+        grupoWhatsAppObj.addWithUpdate();
+        grupoWhatsAppObj.centerH();
+        canvas.renderAll();
+      }
+    }
+
+    function alterarCorFaixas(cor) {
+      if (faixaTopoObj) faixaTopoObj.set('fill', cor);
+      if (faixaBaseObj) faixaBaseObj.set('fill', cor);
+      canvas.renderAll();
+    }
+
+    function alterarCorLetras(cor) {
+      if (textoTopoObj) textoTopoObj.set('fill', cor);
+      if (textoTelefoneObj && grupoWhatsAppObj) {
+        textoTelefoneObj.set('fill', cor);
+        grupoWhatsAppObj.addWithUpdate();
+      }
+      canvas.renderAll();
     }
 
     function fecharEditor() {
       document.getElementById('modalEditor').style.display = 'none';
       canvas.clear();
-    }
-
-    function adicionarTextoTopo() {
-      const textoTopo = new fabric.IText('SEU TEXTO PRINCIPAL AQUI', {
-        fontFamily: 'Impact, Arial Black, sans-serif',
-        fontSize: 22,
-        fill: '#ffffff',
-        stroke: '#000000',
-        strokeWidth: 1.5,
-        textAlign: 'center',
-        shadow: 'rgba(0,0,0,0.9) 2px 2px 5px'
-      });
-
-      canvas.add(textoTopo);
-      textoTopo.centerH();
-      textoTopo.set({ top: 18 });
-      canvas.setActiveObject(textoTopo);
-      canvas.renderAll();
-    }
-
-    function adicionarWhatsAppEmbaixo() {
-      fabric.loadSVGFromString(svgWhatsApp, function(objects, options) {
-        const icone = fabric.util.groupSVGElements(objects, options);
-        icone.scaleToWidth(26);
-
-        const telefone = new fabric.IText('(81) 99437-0775', {
-          fontFamily: 'Arial, sans-serif',
-          fontWeight: 'bold',
-          fontSize: 18,
-          fill: '#ffffff',
-          stroke: '#000000',
-          strokeWidth: 1,
-          shadow: 'rgba(0,0,0,0.9) 2px 2px 5px',
-          left: 34,
-          top: 2
-        });
-
-        const grupoWhatsApp = new fabric.Group([icone, telefone], {
-          shadow: 'rgba(0,0,0,0.6) 0px 3px 8px'
-        });
-
-        canvas.add(grupoWhatsApp);
-        grupoWhatsApp.centerH();
-        grupoWhatsApp.set({ top: canvas.height - 50 });
-        canvas.setActiveObject(grupoWhatsApp);
-        canvas.renderAll();
-      });
-    }
-
-    function aplicarCor(corHex) {
-      const obj = canvas.getActiveObject();
-      if (!obj) {
-        canvas.getObjects().forEach(item => {
-          if (item.type === 'i-text' || item.type === 'text') item.set('fill', corHex);
-          if (item.type === 'group') {
-            item.getObjects().forEach(sub => {
-              if (sub.type === 'i-text') sub.set('fill', corHex);
-            });
-          }
-        });
-      } else {
-        if (obj.type === 'i-text' || obj.type === 'text') obj.set('fill', corHex);
-        if (obj.type === 'group') {
-          obj.getObjects().forEach(sub => {
-            if (sub.type === 'i-text') sub.set('fill', corHex);
-          });
-        }
-      }
-      canvas.renderAll();
-    }
-
-    function removerSelecionado() {
-      const ativo = canvas.getActiveObject();
-      if (ativo) canvas.remove(ativo);
     }
 
     function obterDataURL() {
