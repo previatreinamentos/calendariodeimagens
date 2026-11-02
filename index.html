@@ -483,7 +483,7 @@
       color: var(--text);
     }
 
-    /* Palco Central do Canvas (Ocupa Todo o Restante) */
+    /* Palco Central do Canvas */
     .editor-stage {
       flex: 1;
       width: 100%;
@@ -819,7 +819,6 @@
 
         document.getElementById('modalEditor').style.display = 'flex';
 
-        // Executa com leve atraso para o navegador calcular o tamanho exato do iframe
         setTimeout(ajustarCanvasNaTela, 80);
       });
     }
@@ -831,26 +830,49 @@
       const stageW = Math.max(stage.clientWidth - 28, 260);
       const stageH = Math.max(stage.clientHeight - 28, 260);
 
-      let escala = Math.min(stageW / imagemCarregadaObj.width, stageH / imagemCarregadaObj.height);
+      // Usar a proporção da imagem original
+      const aspect = imagemCarregadaObj.width / imagemCarregadaObj.height;
 
-      canvas.setWidth(imagemCarregadaObj.width * escala);
-      canvas.setHeight(imagemCarregadaObj.height * escala);
+      // Calcular dimensões do canvas preservando proporção
+      let canvasW, canvasH;
+      if (stageW / stageH > aspect) {
+        canvasH = stageH;
+        canvasW = stageH * aspect;
+      } else {
+        canvasW = stageW;
+        canvasH = stageW / aspect;
+      }
+
+      canvas.setWidth(canvasW);
+      canvas.setHeight(canvasH);
+
+      // Calcular a altura que as faixas vão ocupar
+      const alturaFaixa = Math.max(canvasH * 0.125, 48);
+
+      // O segredo: a imagem é espremida para caber EXATAMENTE entre as faixas, com margem de 4px
+      const espacoUtilH = canvasH - (alturaFaixa * 2) - 8; 
+      const escalaH = espacoUtilH / imagemCarregadaObj.height;
+      const escalaW = canvasW / imagemCarregadaObj.width;
 
       imagemCarregadaObj.set({
-        scaleX: escala,
-        scaleY: escala,
+        scaleX: escalaW,
+        scaleY: escalaH,
+        left: 0,
+        top: alturaFaixa + 4, // Alinha exatamente abaixo da faixa de cima
         selectable: false,
         evented: false
       });
 
       canvas.clear();
-      canvas.setBackgroundImage(imagemCarregadaObj, canvas.renderAll.bind(canvas));
+      
+      // Fundo geral do canvas
+      canvas.setBackgroundColor('#0f172a', canvas.renderAll.bind(canvas));
+      canvas.add(imagemCarregadaObj);
 
-      construirEstruturaPadrao();
+      construirEstruturaPadrao(alturaFaixa);
     }
 
-    function construirEstruturaPadrao() {
-      const alturaFaixa = Math.max(canvas.height * 0.125, 48);
+    function construirEstruturaPadrao(alturaFaixa) {
       const corFaixaPadrao = 'rgba(15, 23, 42, 0.94)';
 
       // 1. Faixa Superior
@@ -860,9 +882,8 @@
         width: canvas.width,
         height: alturaFaixa,
         fill: corFaixaPadrao,
-        selectable: true,
-        lockMovementX: true,
-        lockMovementY: true
+        selectable: false,
+        evented: false
       });
       canvas.add(faixaTopoObj);
 
@@ -871,7 +892,7 @@
       textoTopoObj = new fabric.IText(textoTopoValor, {
         fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
         fontWeight: '800',
-        fontSize: Math.max(alturaFaixa * 0.40, 16),
+        fontSize: Math.max(alturaFaixa * 0.38, 14),
         fill: '#ffffff',
         textAlign: 'center',
         shadow: 'rgba(0,0,0,0.3) 0 2px 4px'
@@ -887,9 +908,8 @@
         width: canvas.width,
         height: alturaFaixa,
         fill: corFaixaPadrao,
-        selectable: true,
-        lockMovementX: true,
-        lockMovementY: true
+        selectable: false,
+        evented: false
       });
       canvas.add(faixaBaseObj);
 
@@ -897,14 +917,14 @@
       const telefoneValor = document.getElementById('inputTelefone').value;
       fabric.loadSVGFromString(svgWhatsApp, function(objects, options) {
         iconeWhatsObj = fabric.util.groupSVGElements(objects, options);
-        const tamanhoIcone = alturaFaixa * 0.50;
+        const tamanhoIcone = alturaFaixa * 0.45;
         iconeWhatsObj.scaleToWidth(tamanhoIcone);
         iconeWhatsObj.set({ originY: 'center', top: tamanhoIcone / 2, left: 0 });
 
         textoTelefoneObj = new fabric.IText(telefoneValor, {
           fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
           fontWeight: '700',
-          fontSize: Math.max(alturaFaixa * 0.40, 16),
+          fontSize: Math.max(alturaFaixa * 0.38, 14),
           fill: '#ffffff',
           originY: 'center',
           left: tamanhoIcone + 10,
