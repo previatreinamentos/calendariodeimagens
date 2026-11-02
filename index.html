@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -186,11 +186,11 @@
           <div class="color-btn" style="background: #ff1744;" title="Vermelho" onclick="aplicarCor('#ff1744')"></div>
         </div>
 
-        <button onclick="removerSelecionado()" style="color: #ff6b6b;">🗑️ Excluir</button>
+        <button onclick="removerSelecionado()" style="color: #ff6b6b;">🗑️ Eliminar</button>
       </div>
       <div class="toolbar">
-        <button class="btn-share" onclick="compartilharOuBaixar()">📲 Compartilhar</button>
-        <button class="btn-accent" onclick="baixarImagemFinal()">💾 Baixar</button>
+        <button class="btn-share" onclick="compartilharOuBaixar()">📲 Partilhar</button>
+        <button class="btn-accent" onclick="baixarImagemFinal()">💾 Descarregar</button>
         <button onclick="fecharEditor()">✕ Sair</button>
       </div>
     </div>
@@ -213,7 +213,7 @@
     const mesAtual = hoje.getMonth() + 1;
     const mesFormatado = String(mesAtual).padStart(2, '0');
     const totalDias = new Date(anoAtual, mesAtual, 0).getDate();
-    const nomeMes = hoje.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+    const nomeMes = hoje.toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' });
 
     window.onload = function() {
       canvas = new fabric.Canvas('canvasFabric');
@@ -228,28 +228,47 @@
 
       for (let dia = 1; dia <= totalDias; dia++) {
         const diaZero = String(dia).padStart(2, '0');
-        const nomeArquivo = `${anoAtual}-${mesFormatado}-${diaZero}.jpg`;
+        const baseNome = `${anoAtual}-${mesFormatado}-${diaZero}`;
+
+        // Variações automáticas para carregar mesmo se vier .jpg, .jpg.jpg, .png ou .jpeg
+        const extensoes = ['.jpg.jpg', '.jpg', '.jpeg', '.png'];
 
         const card = document.createElement('div');
         card.className = 'card-dia';
 
         card.innerHTML = `
           <div class="dia-tag">Dia ${diaZero}</div>
-          <div class="thumb-wrapper">
-            <img src="${nomeArquivo}" alt="Dia ${diaZero}" 
-                 onerror="this.parentElement.innerHTML='<span class=\\'sem-arte\\'>Sem arte</span>'">
+          <div class="thumb-wrapper" id="thumb-${dia}">
+            <img src="${baseNome}${extensoes[0]}" alt="Dia ${diaZero}">
           </div>
         `;
 
-        card.onclick = () => carregarNoEditor(nomeArquivo);
+        const imgEl = card.querySelector('img');
+        let indexExtensao = 0;
+
+        imgEl.onerror = function() {
+          indexExtensao++;
+          if (indexExtensao < extensoes.length) {
+            this.src = `${baseNome}${extensoes[indexExtensao]}`;
+          } else {
+            this.parentElement.innerHTML = '<span class="sem-arte">Sem arte</span>';
+            card.onclick = null;
+          }
+        };
+
+        imgEl.onload = function() {
+          const caminhoFinal = this.src;
+          card.onclick = () => carregarNoEditor(caminhoFinal);
+        };
+
         grade.appendChild(card);
       }
     }
 
-    function carregarNoEditor(nomeArquivo) {
-      nomeArquivoAtual = nomeArquivo;
+    function carregarNoEditor(urlImagem) {
+      nomeArquivoAtual = urlImagem.substring(urlImagem.lastIndexOf('/') + 1);
 
-      fabric.Image.fromURL(nomeArquivo, function(img) {
+      fabric.Image.fromURL(urlImagem, function(img) {
         if (!img || !img.width) return;
 
         document.getElementById('modalEditor').style.display = 'flex';
