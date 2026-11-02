@@ -34,43 +34,59 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      padding: 24px;
+      padding: 20px;
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Cabeçalho da Galeria */
+    /* Cabeçalho com Navegação de Meses */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
       background: var(--surface);
-      padding: 18px 24px;
+      padding: 16px 20px;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-nav {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover {
+      background: #e2e8f0;
+      border-color: var(--border-hover);
     }
     header h1 {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text);
-    }
-    .badge {
-      background: #eff6ff;
-      color: var(--primary);
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-weight: 700;
       text-transform: capitalize;
-      font-size: 0.85rem;
-      border: 1px solid #dbeafe;
     }
 
-    /* Grade do Calendário */
+    /* Grade de Postagens */
     .grid-calendario {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
       gap: 16px;
     }
     .card-dia {
@@ -81,59 +97,70 @@
       flex-direction: column;
       position: relative;
       border: 1px solid var(--border);
-      min-height: 175px;
+      min-height: 190px;
       cursor: pointer;
       box-shadow: var(--shadow-sm);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .card-dia:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
       box-shadow: var(--shadow-md);
       border-color: var(--primary);
     }
-    .dia-tag {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: rgba(15, 23, 42, 0.78);
-      backdrop-filter: blur(4px);
-      color: #ffffff;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      z-index: 2;
-    }
+    
+    /* Efeito de Zoom na Imagem ao passar o Mouse */
     .thumb-wrapper {
       width: 100%;
-      height: 140px;
+      height: 150px;
       background: var(--surface-subtle);
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      position: relative;
     }
     .thumb-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.35s ease;
+    }
+    .card-dia:hover .thumb-wrapper img {
+      transform: scale(1.08);
+    }
+
+    /* Tag de Data Formatada */
+    .dia-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      z-index: 2;
+      letter-spacing: 0.3px;
     }
     .sem-arte {
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 500;
     }
 
-    /* Modal do Editor */
+    /* Modal de Edição */
     #modalEditor {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: rgba(15, 23, 42, 0.45);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(8px);
       z-index: 1000;
-      padding: 20px;
+      padding: 16px;
       align-items: center;
       justify-content: center;
     }
@@ -143,7 +170,7 @@
       width: 100%;
       height: 100%;
       max-width: 1400px;
-      max-height: 92vh;
+      max-height: 94vh;
       background: var(--surface);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
@@ -153,8 +180,8 @@
 
     /* Barra Lateral Esquerda */
     .sidebar {
-      width: 340px;
-      min-width: 340px;
+      width: 350px;
+      min-width: 350px;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
@@ -163,7 +190,6 @@
       overflow-y: auto;
       gap: 16px;
     }
-
     .sidebar-header {
       display: flex;
       justify-content: space-between;
@@ -231,7 +257,7 @@
       gap: 8px;
       align-items: center;
       flex-wrap: wrap;
-      padding: 4px 0;
+      padding: 2px 0;
     }
     .color-dot {
       width: 28px;
@@ -251,7 +277,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      padding-top: 16px;
+      padding-top: 14px;
       border-top: 1px solid var(--border);
     }
     button.btn {
@@ -295,7 +321,7 @@
       color: var(--text);
     }
 
-    /* Área da Imagem / Canvas (Máxima Ocupação) */
+    /* Área Central / Canvas em Destaque */
     .editor-stage {
       flex: 1;
       display: flex;
@@ -309,12 +335,17 @@
     .canvas-container {
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     }
 
-    /* Celular: Barra Lateral vira Drawer Inferior */
+    /* Responsividade Celular */
     @media (max-width: 860px) {
       body { padding: 12px; }
+      header { padding: 12px 16px; }
+      .grid-calendario {
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+        gap: 10px;
+      }
       #modalEditor { padding: 0; }
       .editor-wrapper {
         flex-direction: column-reverse;
@@ -326,14 +357,16 @@
       .sidebar {
         width: 100%;
         min-width: 100%;
-        max-height: 50vh;
+        max-height: 54vh;
         border-right: none;
         border-top: 1px solid var(--border);
         box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+        padding: 16px;
       }
       .editor-stage {
         flex: 1;
-        max-height: 50vh;
+        max-height: 46vh;
+        padding: 8px;
       }
     }
   </style>
@@ -341,17 +374,20 @@
 <body>
 
   <header>
-    <h1 id="tituloMes">Calendário Criativo</h1>
-    <div id="badgeMes" class="badge">--</div>
+    <div class="header-nav">
+      <button class="btn-nav" onclick="mudarMes(-1)">‹ Mês Anterior</button>
+      <button class="btn-nav" onclick="mudarMes(1)">Próximo Mês ›</button>
+    </div>
+    <h1 id="tituloMes">Calendário de Postagens</h1>
   </header>
 
   <div id="grade" class="grid-calendario"></div>
 
-  <!-- MODAL MODERNO -->
+  <!-- MODAL DE EDIÇÃO -->
   <div id="modalEditor">
     <div class="editor-wrapper">
       
-      <!-- BARRA LATERAL ESQUERDA -->
+      <!-- PAINEL LATERAL DE PERSONALIZAÇÃO -->
       <div class="sidebar">
         <div class="sidebar-header">
           <h2>Personalizar Arte</h2>
@@ -365,18 +401,18 @@
 
         <div class="form-group">
           <label>WhatsApp / Contato</label>
-          <input type="text" id="inputTelefone" value="(81) 99437-0775" oninput="atualizarTelefone(this.value)">
+          <input type="text" id="inputTelefone" value="(81) 99999-9999" oninput="atualizarTelefone(this.value)">
         </div>
 
         <div class="form-group">
           <label>Cor das Faixas (Topo & Base)</label>
           <div class="palette-row">
-            <div class="color-dot" style="background: rgba(15, 23, 42, 0.9);" title="Grafite Escuro" onclick="alterarCorFaixas('rgba(15, 23, 42, 0.92)')"></div>
+            <div class="color-dot" style="background: rgba(15, 23, 42, 0.92);" title="Grafite Escuro" onclick="alterarCorFaixas('rgba(15, 23, 42, 0.92)')"></div>
             <div class="color-dot" style="background: #2563eb;" title="Azul Royal" onclick="alterarCorFaixas('#2563eb')"></div>
             <div class="color-dot" style="background: #10b981;" title="Verde Esmeralda" onclick="alterarCorFaixas('#10b981')"></div>
-            <div class="color-dot" style="background: #e11d48;" title="Vermelho Vibrante" onclick="alterarCorFaixas('#e11d48')"></div>
+            <div class="color-dot" style="background: #e11d48;" title="Vermelho" onclick="alterarCorFaixas('#e11d48')"></div>
             <div class="color-dot" style="background: #f59e0b;" title="Âmbar" onclick="alterarCorFaixas('#f59e0b')"></div>
-            <div class="color-dot" style="background: #ffffff;" title="Branco Puro" onclick="alterarCorFaixas('#ffffff')"></div>
+            <div class="color-dot" style="background: #ffffff;" title="Branco" onclick="alterarCorFaixas('#ffffff')"></div>
           </div>
         </div>
 
@@ -394,17 +430,17 @@
         <div class="sidebar-actions">
           <button class="btn btn-share" onclick="compartilharOuBaixar()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-            Compartilhar Arte
+            Compartilhar no WhatsApp / Instagram
           </button>
           <button class="btn btn-primary" onclick="baixarImagemFinal()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar Imagem
+            Baixar Imagem em Alta Resolução
           </button>
           <button class="btn btn-subtle" onclick="fecharEditor()">Voltar ao Calendário</button>
         </div>
       </div>
 
-      <!-- ÁREA CENTRAL DA IMAGEM -->
+      <!-- PALCO DE VISUALIZAÇÃO -->
       <div class="editor-stage" id="stageContainer">
         <canvas id="canvasFabric"></canvas>
       </div>
@@ -417,41 +453,57 @@
     let nomeArquivoAtual = 'arte-editada.png';
     let faixaTopoObj, faixaBaseObj, textoTopoObj, grupoWhatsAppObj, textoTelefoneObj;
 
+    // Ícone SVG do WhatsApp
     const svgWhatsApp = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <path fill="#25D366" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
       </svg>`;
 
-    const hoje = new Date();
-    const anoAtual = hoje.getFullYear();
-    const mesAtual = hoje.getMonth() + 1;
-    const mesFormatado = String(mesAtual).padStart(2, '0');
-    const totalDias = new Date(anoAtual, mesAtual, 0).getDate();
-    const nomeMes = hoje.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+    // Gestão de Data e Navegação de Mês
+    let dataAtualVisualizada = new Date(); // Inicia com o mês atual
 
     window.onload = function() {
       canvas = new fabric.Canvas('canvasFabric', { selection: true });
-      document.getElementById('tituloMes').innerText = `Calendário - ${nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1)}`;
-      document.getElementById('badgeMes').innerText = nomeMes;
-      renderizarGrade();
+      atualizarGradeDoMes();
     };
 
-    function renderizarGrade() {
+    function mudarMes(delta) {
+      dataAtualVisualizada.setMonth(dataAtualVisualizada.getMonth() + delta);
+      atualizarGradeDoMes();
+    }
+
+    function atualizarGradeDoMes() {
+      const ano = dataAtualVisualizada.getFullYear();
+      const mes = dataAtualVisualizada.getMonth() + 1;
+      const mesFormatado = String(mes).padStart(2, '0');
+      const totalDias = new Date(ano, mes, 0).getDate();
+      const nomeMesCompleto = dataAtualVisualizada.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+      document.getElementById('tituloMes').innerText = `Calendário - ${nomeMesCompleto}`;
+
       const grade = document.getElementById('grade');
       grade.innerHTML = '';
 
+      const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
       for (let dia = 1; dia <= totalDias; dia++) {
         const diaZero = String(dia).padStart(2, '0');
-        const baseNome = `${anoAtual}-${mesFormatado}-${diaZero}`;
+        const dataDia = new Date(ano, mes - 1, dia);
+        const diaSemanaTexto = diasSemana[dataDia.getDay()];
+        
+        // Data formatada real: ex.: Seg, 02/11/2026
+        const etiquetaData = `${diaSemanaTexto}, ${diaZero}/${mesFormatado}/${ano}`;
+
+        const baseNome = `${ano}-${mesFormatado}-${diaZero}`;
         const extensoes = ['.jpg.jpg', '.jpg', '.jpeg', '.png'];
 
         const card = document.createElement('div');
         card.className = 'card-dia';
 
         card.innerHTML = `
-          <div class="dia-tag">Dia ${diaZero}</div>
+          <div class="dia-tag">${etiquetaData}</div>
           <div class="thumb-wrapper">
-            <img src="${baseNome}${extensoes[0]}" alt="Dia ${diaZero}">
+            <img src="${baseNome}${extensoes[0]}" alt="${etiquetaData}">
           </div>
         `;
 
@@ -485,10 +537,9 @@
 
         document.getElementById('modalEditor').style.display = 'flex';
 
-        // Otimização para ocupar o máximo de espaço sem cortar
         const stage = document.getElementById('stageContainer');
-        const stageW = stage.clientWidth - 32;
-        const stageH = stage.clientHeight - 32;
+        const stageW = stage.clientWidth - 28;
+        const stageH = stage.clientHeight - 28;
 
         let escala = Math.min(stageW / img.width, stageH / img.height);
 
@@ -534,7 +585,7 @@
         fontSize: Math.max(alturaFaixa * 0.44, 20),
         fill: '#ffffff',
         textAlign: 'center',
-        shadow: 'rgba(0,0,0,0.4) 0 2px 4px'
+        shadow: 'rgba(0,0,0,0.3) 0 2px 4px'
       });
       canvas.add(textoTopoObj);
       textoTopoObj.centerH();
@@ -553,19 +604,27 @@
       });
       canvas.add(faixaBaseObj);
 
-      // 4. WhatsApp + Telefone
+      // 4. WhatsApp + Telefone Perfeitamente Centralizados e Alinhados
       const telefoneValor = document.getElementById('inputTelefone').value;
       fabric.loadSVGFromString(svgWhatsApp, function(objects, options) {
         const icone = fabric.util.groupSVGElements(objects, options);
-        icone.scaleToWidth(alturaFaixa * 0.50);
+        const tamanhoIcone = alturaFaixa * 0.50;
+        icone.scaleToWidth(tamanhoIcone);
 
         textoTelefoneObj = new fabric.IText(telefoneValor, {
           fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
           fontWeight: '700',
           fontSize: Math.max(alturaFaixa * 0.40, 18),
           fill: '#ffffff',
-          left: icone.getScaledWidth() + 10,
-          top: 2
+          originY: 'center',
+          left: tamanhoIcone + 10,
+          top: tamanhoIcone / 2
+        });
+
+        icone.set({
+          originY: 'center',
+          top: tamanhoIcone / 2,
+          left: 0
         });
 
         grupoWhatsAppObj = new fabric.Group([icone, textoTelefoneObj], {
@@ -642,7 +701,8 @@
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: 'Minha Arte'
+            title: 'Minha Postagem',
+            text: 'Confira a arte para as redes sociais!'
           });
         } else {
           baixarImagemFinal();
