@@ -41,6 +41,37 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Botão Flutuante com Texto Pequeno "Tela Cheia" */
+    .btn-fullscreen {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 2000;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 6px 14px 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-fullscreen:hover {
+      background: var(--surface-subtle);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+    .btn-fullscreen span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
     /* Cabeçalho com Navegação */
     header {
       display: flex;
@@ -49,6 +80,7 @@
       margin-bottom: 24px;
       background: var(--surface);
       padding: 16px 20px;
+      padding-right: 130px; /* Margem para não sobrepor o botão de tela cheia */
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
@@ -421,7 +453,9 @@
     /* Responsividade Celular */
     @media (max-width: 860px) {
       body { padding: 12px; }
-      header { padding: 12px 16px; }
+      .btn-fullscreen { top: 10px; right: 10px; padding: 5px 10px 5px 8px; }
+      .btn-fullscreen span { font-size: 0.68rem; }
+      header { padding: 12px 16px; padding-right: 105px; }
       .grid-calendario {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 10px;
@@ -452,6 +486,14 @@
   </style>
 </head>
 <body>
+
+  <!-- BOTÃO FLUTUANTE DE TELA CHEIA COM TEXTO PEQUENO -->
+  <button class="btn-fullscreen" id="btnToggleFullscreen" onclick="alternarTelaCheia()" title="Alternar Tela Cheia">
+    <svg id="iconeTelaCheia" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+    </svg>
+    <span id="textoTelaCheia">Tela Cheia</span>
+  </button>
 
   <header>
     <div class="header-nav">
@@ -544,66 +586,42 @@
         <path fill="#25D366" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
       </svg>`;
 
-    // CALENDÁRIO COMPLETO DO ANO (JANEIRO A DEZEMBRO)
     const diasComemorativos = {
-      // JANEIRO
       "01-01": { evento: "Ano Novo / Confraternização Universal (Paz no Trânsito)", eixo: "Geral & Conscientização" },
       "01-16": { evento: "Dia dos Cortadores de Cana e Transportadores Rurais", eixo: "Transporte & Segurança" },
       "01-22": { evento: "Dia do Instrutor de Autoescola", eixo: "Qualificação & Trânsito" },
-      
-      // FEVEREIRO
       "02-14": { evento: "Abertura Oficial do Carnaval (Se Beber, Não Dirija)", eixo: "Segurança Viária & Fiscalização" },
       "02-15": { evento: "Domingo de Carnaval (Atenção redobrada nas estradas)", eixo: "Prevenção de Acidentes" },
       "02-16": { evento: "Segunda-feira de Carnaval (Operação Lei Seca)", eixo: "Fiscalização" },
       "02-17": { evento: "Terça-feira de Carnaval (Ponto Facultativo)", eixo: "Conscientização" },
       "02-18": { evento: "Quarta-feira de Cinzas (Retorno Seguro das Rodovias)", eixo: "Volta para Casa & Segurança" },
-
-      // MARÇO
       "03-08": { evento: "Dia Internacional da Mulher (Mulheres no Transporte)", eixo: "Mobilidade Inclusiva" },
       "03-22": { evento: "Dia Mundial da Água (Direção Sustentável & Manutenção)", eixo: "Meio Ambiente" },
-
-      // ABRIL
       "04-03": { evento: "Sexta-feira Santa (Operação Feriado nas Rodovias)", eixo: "Segurança Viária" },
       "04-05": { evento: "Domingo de Páscoa (Retorno com Segurança)", eixo: "Trânsito Rodoviário" },
       "04-21": { evento: "Tiradentes (Feriado Nacional)", eixo: "Geral" },
       "04-30": { evento: "Dia Nacional da Mulher no Volante", eixo: "Mobilidade & Inclusão" },
-
-      // MAIO - MÊS DA CONSCIENTIZAÇÃO NO TRÂNSITO (MAIO AMARELO)
       "05-01": { evento: "Dia do Trabalhador / Abertura do Maio Amarelo", eixo: "Maio Amarelo" },
       "05-10": { evento: "Dia das Mães (Cadeirinha e Proteção Infantil)", eixo: "Segurança Infantil" },
       "05-11": { evento: "Aniversário da Década de Ação para Segurança Viária da ONU", eixo: "Maio Amarelo" },
       "05-20": { evento: "Dia do Comissário de Bordo e Transporte", eixo: "Mobilidade" },
-
-      // JUNHO
       "06-04": { evento: "Corpus Christi (Operação Viagem Segura)", eixo: "Trânsito & Viagem" },
       "06-05": { evento: "Dia Mundial do Meio Ambiente (Emissão Zero & Mobilidade)", eixo: "Sustentabilidade" },
       "06-24": { evento: "Dia de São João (Cuidado redobrado nas estradas)", eixo: "Segurança Viária" },
-
-      // JULHO
       "07-09": { evento: "Revolução Constitucionalista (Feriado SP)", eixo: "Geral" },
       "07-25": { evento: "Dia do Motorista e Dia de São Cristóvão", eixo: "Profissionais do Volante" },
       "07-27": { evento: "Dia do Motociclista (Pilotagem Segura & Equipamentos)", eixo: "Duas Rodas" },
-
-      // AGOSTO
       "08-09": { evento: "Dia dos Pais (Exemplo de Cidadania no Trânsito)", eixo: "Conscientização" },
       "08-19": { evento: "Dia do Ciclista (Respeite a distância de 1,5m)", eixo: "Mobilidade Ativa" },
-
-      // SETEMBRO - SEMANA NACIONAL DE TRÂNSITO
       "09-07": { evento: "Independência do Brasil (Feriado Nacional)", eixo: "Trânsito Viário" },
       "09-18": { evento: "Abertura da Semana Nacional de Trânsito", eixo: "Educação no Trânsito" },
       "09-22": { evento: "Dia Mundial Sem Carro (Mobilidade Urbana)", eixo: "Sustentabilidade & Transporte" },
       "09-25": { evento: "Dia Nacional do Trânsito / Fechamento da SNT", eixo: "Paz no Trânsito" },
-
-      // OUTUBRO
       "10-12": { evento: "Nossa Senhora Aparecida / Dia das Crianças (Cadeirinha Correta)", eixo: "Segurança Infantil" },
       "10-25": { evento: "Dia do Engenheiro Civil e Infraestrutura", eixo: "Rodovias" },
-
-      // NOVEMBRO
       "11-02": { evento: "Finados (Operação Estradas)", eixo: "Segurança Rodoviária" },
       "11-15": { evento: "Proclamação da República & Memória das Vítimas de Trânsito", eixo: "Conscientização Mundial" },
       "11-20": { evento: "Dia Nacional da Consciência Negra", eixo: "Inclusão & Cidadania" },
-
-      // DEZEMBRO
       "12-03": { evento: "Dia Internacional da Pessoa com Deficiência (Vagas reservadas)", eixo: "Mobilidade Inclusiva" },
       "12-15": { evento: "Dia do Engenheiro Rodoviário e de Infraestrutura", eixo: "Trânsito & Engenharia" },
       "12-20": { evento: "Início da Operação Fim de Ano / Verão nas Rodovias", eixo: "Trânsito & Fiscalização" },
@@ -617,7 +635,40 @@
     window.onload = function() {
       canvas = new fabric.Canvas('canvasFabric', { selection: true });
       atualizarGradeDoMes();
+
+      document.addEventListener('fullscreenchange', atualizarIconeFullscreen);
+      document.addEventListener('webkitfullscreenchange', atualizarIconeFullscreen);
     };
+
+    function alternarTelaCheia() {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+
+    function atualizarIconeFullscreen() {
+      const isFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      const icone = document.getElementById('iconeTelaCheia');
+      const texto = document.getElementById('textoTelaCheia');
+
+      if (isFull) {
+        icone.innerHTML = `<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>`;
+        texto.innerText = 'Sair da Tela Cheia';
+      } else {
+        icone.innerHTML = `<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>`;
+        texto.innerText = 'Tela Cheia';
+      }
+    }
 
     function mudarMes(delta) {
       dataAtualVisualizada.setMonth(dataAtualVisualizada.getMonth() + delta);
@@ -698,7 +749,6 @@
         document.getElementById('txtEventoEixo').innerText = `Eixo: ${eventoInfo.eixo}`;
         boxDestaque.style.display = 'flex';
 
-        // Preenche automaticamente o texto superior com o tema da data especial
         document.getElementById('inputTextoTopo').value = eventoInfo.evento.toUpperCase();
       } else {
         boxDestaque.style.display = 'none';
@@ -867,7 +917,7 @@
     async function compartilharOuBaixar() {
       try {
         const dataURL = obterDataURL();
-        const blob = dataURLtoBlob(dataURL);
+        const blob = dataURLtoBlob(dataurl);
         const nomeFinal = 'arte-' + nomeArquivoAtual;
         const file = new File([blob], nomeFinal, { type: 'image/png' });
 
