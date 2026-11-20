@@ -342,6 +342,11 @@
       flex-direction: column;
       gap: 4px;
     }
+    .form-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .form-group label {
       font-size: 0.72rem;
       font-weight: 700;
@@ -349,7 +354,8 @@
       letter-spacing: 0.04em;
       color: var(--text-muted);
     }
-    .form-group input[type="text"] {
+    .form-group input[type="text"],
+    .form-group textarea {
       width: 100%;
       padding: 8px 12px;
       background: var(--surface-subtle);
@@ -357,15 +363,47 @@
       border-radius: var(--radius-sm);
       color: var(--text);
       font-family: inherit;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 500;
       transition: all 0.2s;
     }
-    .form-group input[type="text"]:focus {
+    .form-group textarea {
+      resize: vertical;
+      min-height: 76px;
+      line-height: 1.4;
+    }
+    .form-group input[type="text"]:focus,
+    .form-group textarea:focus {
       outline: none;
       border-color: var(--primary);
       background: #ffffff;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    /* Botão Copiar Legenda */
+    .btn-copy-caption {
+      background: var(--surface-subtle);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-copy-caption:hover {
+      background: #eff6ff;
+      border-color: var(--primary);
+    }
+    .btn-copy-caption.copied {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #86efac;
     }
 
     /* Seletor de Formato (Feed vs Shorts) */
@@ -637,6 +675,21 @@
           </div>
         </div>
 
+        <!-- Legenda da Imagem com Botão de Copiar -->
+        <div class="form-group">
+          <div class="form-group-header">
+            <label for="inputLegenda">Legenda da Postagem</label>
+            <button type="button" class="btn-copy-caption" id="btnCopiarLegenda" onclick="copiarLegenda()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="txtBtnCopiar">Copiar Legenda</span>
+            </button>
+          </div>
+          <textarea id="inputLegenda" placeholder="Escreva aqui a legenda que acompanhará a imagem nas redes sociais..."></textarea>
+        </div>
+
         <!-- Cores das Faixas -->
         <div class="form-group">
           <label>Cor das Faixas (Topo & Base)</label>
@@ -869,14 +922,19 @@
       nomeArquivoAtual = urlImagem.substring(urlImagem.lastIndexOf('/') + 1);
 
       const boxDestaque = document.getElementById('boxEventoDestaque');
+      const inputLegenda = document.getElementById('inputLegenda');
+      const telefoneAtual = document.getElementById('inputTelefone').value;
+
       if (eventoInfo) {
         document.getElementById('txtEventoNome').innerText = eventoInfo.evento;
         document.getElementById('txtEventoEixo').innerText = `Eixo: ${eventoInfo.eixo}`;
         boxDestaque.style.display = 'flex';
         document.getElementById('inputTextoTopo').value = eventoInfo.evento.toUpperCase();
+        inputLegenda.value = `${eventoInfo.evento} 🚦\n\nNo trânsito, cada atitude faz a diferença para salvar vidas.\n\n📲 Fale conosco pelo WhatsApp: ${telefoneAtual}\n\n#TransitoSeguro #EducacaoNoTransito #SegurancaViaria`;
       } else {
         boxDestaque.style.display = 'none';
         document.getElementById('inputTextoTopo').value = 'SEU TEXTO PRINCIPAL AQUI';
+        inputLegenda.value = `Confira nossa dica de hoje! 🚗✨\n\n📲 Entre em contato pelo WhatsApp: ${telefoneAtual}\n\n#Transito #DirecaoDefensiva #Seguranca`;
       }
 
       fabric.Image.fromURL(urlImagem, function(img) {
@@ -887,6 +945,35 @@
 
         setTimeout(ajustarCanvasNaTela, 80);
       });
+    }
+
+    function copiarLegenda() {
+      const textarea = document.getElementById('inputLegenda');
+      const btn = document.getElementById('btnCopiarLegenda');
+      const txtBtn = document.getElementById('txtBtnCopiar');
+      const texto = textarea.value;
+
+      const confirmarCopia = () => {
+        btn.classList.add('copied');
+        txtBtn.innerText = 'Copiado!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          txtBtn.innerText = 'Copiar Legenda';
+        }, 2000);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texto).then(confirmarCopia).catch(() => {
+          textarea.select();
+          document.execCommand('copy');
+          confirmarCopia();
+        });
+      } else {
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        confirmarCopia();
+      }
     }
 
     function ajustarCanvasNaTela() {
@@ -915,7 +1002,7 @@
       canvas.clear();
       canvas.setBackgroundColor('#0f172a', canvas.renderAll.bind(canvas));
 
-      // Altura das faixas superior e inferior (no Shorts são um pouco mais compactas proporcionalmente)
+      // Altura das faixas superior e inferior
       const alturaFaixa = (formatoAtual === 'shorts')
         ? Math.max(canvasH * 0.10, 44)
         : Math.max(canvasH * 0.125, 48);
@@ -996,7 +1083,7 @@
       });
       canvas.add(faixaTopoObj);
 
-      // 2. Texto da Faixa Superior (ajusta largura automática para não vazar no modo Shorts)
+      // 2. Texto da Faixa Superior
       const textoTopoValor = document.getElementById('inputTextoTopo').value;
       const tamanhoFonteBase = (formatoAtual === 'shorts')
         ? Math.max(canvas.width * 0.048, 12)
@@ -1142,7 +1229,6 @@
 
       let multiplicador = 2;
       if (formatoAtual === 'shorts') {
-        // Garante exportação em Full HD vertical (1080 x 1920)
         multiplicador = Math.max(1080 / canvas.width, 2);
       } else if (imagemCarregadaObj) {
         multiplicador = Math.max(imagemCarregadaObj.width / canvas.width, 2);
@@ -1158,6 +1244,7 @@
     async function compartilharOuBaixar() {
       const dataURL = gerarDataURLAltaQualidade();
       const sufixo = formatoAtual === 'shorts' ? '-shorts' : '';
+      const legendaTexto = document.getElementById('inputLegenda').value;
 
       try {
         const res = await fetch(dataURL);
@@ -1174,7 +1261,8 @@
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: 'Minha Postagem'
+            title: 'Minha Postagem',
+            text: legendaTexto
           });
           return;
         }
