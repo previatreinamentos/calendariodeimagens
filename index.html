@@ -849,7 +849,7 @@
       // Calcular a altura que as faixas vão ocupar
       const alturaFaixa = Math.max(canvasH * 0.125, 48);
 
-      // O segredo: a imagem é espremida para caber EXATAMENTE entre as faixas, com margem de 4px
+      // A imagem é ajustada para caber exatamente entre as faixas, com margem de 4px
       const espacoUtilH = canvasH - (alturaFaixa * 2) - 8; 
       const escalaH = espacoUtilH / imagemCarregadaObj.height;
       const escalaW = canvasW / imagemCarregadaObj.width;
@@ -858,7 +858,7 @@
         scaleX: escalaW,
         scaleY: escalaH,
         left: 0,
-        top: alturaFaixa + 4, // Alinha exatamente abaixo da faixa de cima
+        top: alturaFaixa + 4,
         selectable: false,
         evented: false
       });
@@ -998,42 +998,56 @@
       imagemCarregadaObj = null;
     }
 
-    async function compartilharOuBaixar() {
+    // Gera a imagem em alta resolução (tamanho original da foto, sem perda de qualidade)
+    function gerarDataURLAltaQualidade() {
       canvas.discardActiveObject();
       canvas.renderAll();
 
-      const stage = canvas.getElement();
-      stage.toBlob(async function(blob) {
+      // Calcula quantas vezes o canvas foi reduzido na tela em relação à imagem original
+      const multiplicador = imagemCarregadaObj
+        ? Math.max(imagemCarregadaObj.width / canvas.width, 2)
+        : 2;
+
+      return canvas.toDataURL({
+        format: 'png',
+        quality: 1.0,
+        multiplier: multiplicador
+      });
+    }
+
+    async function compartilharOuBaixar() {
+      const dataURL = gerarDataURLAltaQualidade();
+
+      try {
+        const res = await fetch(dataURL);
+        const blob = await res.blob();
+
         if (!blob) {
           baixarImagemFinal();
           return;
         }
 
-        const nomeFinal = 'arte-' + nomeArquivoAtual.replace(/\.[^/.]+$/, "") + '.jpg';
-        const file = new File([blob], nomeFinal, { type: 'image/jpeg' });
+        const nomeFinal = 'arte-' + nomeArquivoAtual.replace(/\.[^/.]+$/, "") + '.png';
+        const file = new File([blob], nomeFinal, { type: 'image/png' });
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({
-              files: [file],
-              title: 'Minha Postagem'
-            });
-            return;
-          } catch (err) {
-            if (err.name === 'AbortError') return;
-          }
+          await navigator.share({
+            files: [file],
+            title: 'Minha Postagem'
+          });
+          return;
         }
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
 
-        baixarImagemFinal();
-      }, 'image/jpeg', 0.92);
+      baixarImagemFinal();
     }
 
     function baixarImagemFinal() {
-      canvas.discardActiveObject();
-      canvas.renderAll();
-      const dataURL = canvas.toDataURL({ format: 'jpeg', quality: 0.92 });
+      const dataURL = gerarDataURLAltaQualidade();
       const link = document.createElement('a');
-      link.download = 'arte-' + nomeArquivoAtual.replace(/\.[^/.]+$/, "") + '.jpg';
+      link.download = 'arte-' + nomeArquivoAtual.replace(/\.[^/.]+$/, "") + '.png';
       link.href = dataURL;
       document.body.appendChild(link);
       link.click();
