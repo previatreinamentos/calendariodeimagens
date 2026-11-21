@@ -19,6 +19,8 @@
       --primary-hover: #1d4ed8;
       --accent-green: #10b981;
       --accent-green-hover: #059669;
+      --accent-purple: #7c3aed;
+      --accent-purple-hover: #6d28d9;
       --text: #0f172a;
       --text-muted: #64748b;
       --gold-bg: #fffbeb;
@@ -126,7 +128,7 @@
     /* Grade de Postagens */
     .grid-calendario {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
       gap: 16px;
     }
     .card-dia {
@@ -156,10 +158,10 @@
       box-shadow: 0 8px 18px rgba(245, 158, 11, 0.22);
     }
 
-    /* Zoom no Hover */
+    /* Thumbnails e Prévia de Vídeo */
     .thumb-wrapper {
       width: 100%;
-      height: 145px;
+      height: 150px;
       background: var(--surface-subtle);
       display: flex;
       align-items: center;
@@ -167,14 +169,16 @@
       overflow: hidden;
       position: relative;
     }
-    .thumb-wrapper img {
+    .thumb-wrapper img,
+    .thumb-wrapper video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       transition: transform 0.35s ease;
     }
-    .card-dia:hover .thumb-wrapper img {
+    .card-dia:hover .thumb-wrapper img,
+    .card-dia:hover .thumb-wrapper video {
       transform: scale(1.08);
     }
 
@@ -191,22 +195,38 @@
       font-weight: 700;
       z-index: 2;
     }
-    .badge-especial {
+    .badges-direita {
       position: absolute;
       top: 8px;
       right: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      z-index: 2;
+    }
+    .badge-especial {
       background: #f59e0b;
       color: #ffffff;
       padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 800;
-      z-index: 2;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      gap: 3px;
     }
+    .badge-tipo {
+      background: rgba(37, 99, 235, 0.92);
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+    }
+    .badge-tipo.video {
+      background: rgba(124, 58, 237, 0.92);
+    }
+
     .info-evento-card {
       padding: 8px 10px;
       background: var(--gold-bg);
@@ -238,7 +258,7 @@
       font-weight: 500;
     }
 
-    /* Modal de Edição em Tela Cheia e Iframe */
+    /* Modal de Edição */
     #modalEditor {
       display: none;
       position: fixed;
@@ -267,16 +287,16 @@
 
     /* Barra Lateral Esquerda */
     .sidebar {
-      width: 340px;
+      width: 350px;
       min-width: 320px;
-      max-width: 360px;
+      max-width: 370px;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 18px;
+      padding: 16px;
       overflow-y: auto;
-      gap: 12px;
+      gap: 11px;
       flex-shrink: 0;
     }
     .sidebar-header {
@@ -308,6 +328,39 @@
       background: #fee2e2;
       color: #ef4444;
       border-color: #fca5a5;
+    }
+
+    /* Navegação do Carrossel na Sidebar */
+    .carrossel-nav-box {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+    }
+    .carrossel-nav-box span {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #1e40af;
+    }
+    .btn-slide-nav {
+      background: #ffffff;
+      border: 1px solid #93c5fd;
+      color: #1d4ed8;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-slide-nav:hover {
+      background: #2563eb;
+      color: #ffffff;
     }
 
     .evento-destaque-box {
@@ -523,7 +576,7 @@
       border: none;
       font-family: inherit;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -547,6 +600,14 @@
       background: var(--primary-hover);
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
     }
+    button.btn-purple {
+      background: var(--accent-purple);
+      color: #ffffff;
+    }
+    button.btn-purple:hover {
+      background: var(--accent-purple-hover);
+      box-shadow: 0 4px 10px rgba(124, 58, 237, 0.25);
+    }
     button.btn-subtle {
       background: var(--surface-subtle);
       color: var(--text-muted);
@@ -557,7 +618,7 @@
       color: var(--text);
     }
 
-    /* Palco Central do Canvas */
+    /* Palco Central */
     .editor-stage {
       flex: 1;
       width: 100%;
@@ -576,7 +637,49 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
-    /* Celulares ou telas estreitas (< 700px) */
+    /* Moldura de Vídeo Interativa */
+    .video-stage-box {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #0f172a;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+      position: relative;
+    }
+    .video-faixa {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      text-align: center;
+      font-weight: 800;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+    .video-faixa-base {
+      gap: 8px;
+      font-weight: 700;
+    }
+    .video-media-area {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      background: #000000;
+    }
+    .video-media-area video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
     @media (max-width: 700px) {
       body { padding: 8px; }
       #modalEditor { padding: 0; }
@@ -630,8 +733,15 @@
       <!-- PAINEL LATERAL -->
       <div class="sidebar">
         <div class="sidebar-header">
-          <h2>Personalizar Arte</h2>
+          <h2 id="tituloSidebarEditor">Personalizar Arte</h2>
           <button class="btn-close" onclick="fecharEditor()" title="Fechar">✕</button>
+        </div>
+
+        <!-- Controles exclusivos para Carrossel -->
+        <div class="carrossel-nav-box" id="boxCarrosselNav">
+          <button type="button" class="btn-slide-nav" onclick="mudarLaminaCarrossel(-1)">‹</button>
+          <span id="txtIndicadorCarrossel">Lâmina 1 de 1</span>
+          <button type="button" class="btn-slide-nav" onclick="mudarLaminaCarrossel(1)">›</button>
         </div>
 
         <div class="evento-destaque-box" id="boxEventoDestaque">
@@ -640,7 +750,7 @@
           <span class="eixo" id="txtEventoEixo">--</span>
         </div>
 
-        <!-- Seletor de Formato (Feed ou YouTube Shorts) -->
+        <!-- Seletor de Formato -->
         <div class="form-group">
           <label>Formato da Publicação</label>
           <div class="format-selector">
@@ -687,7 +797,7 @@
               <span id="txtBtnCopiar">Copiar Legenda</span>
             </button>
           </div>
-          <textarea id="inputLegenda" placeholder="Escreva aqui a legenda que acompanhará a imagem nas redes sociais..."></textarea>
+          <textarea id="inputLegenda" placeholder="Escreva aqui a legenda que acompanhará a postagem nas redes sociais..."></textarea>
         </div>
 
         <!-- Cores das Faixas -->
@@ -724,21 +834,52 @@
         </div>
 
         <div class="sidebar-actions">
-          <button class="btn btn-share" onclick="compartilharOuBaixar()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-            Compartilhar no Celular
-          </button>
-          <button class="btn btn-primary" onclick="baixarImagemFinal()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar Imagem Final
-          </button>
+          <!-- Botões para Imagem / Carrossel -->
+          <div id="acoesImagem">
+            <button class="btn btn-share" style="margin-bottom: 8px;" onclick="compartilharOuBaixar()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              Compartilhar no Celular
+            </button>
+            <button class="btn btn-primary" onclick="baixarImagemFinal()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar Lâmina Atual
+            </button>
+            <button class="btn btn-purple" id="btnBaixarTodasCarrossel" style="display: none; margin-top: 8px;" onclick="baixarTodasLaminasCarrossel()">
+              📑 Baixar Todas do Carrossel
+            </button>
+          </div>
+
+          <!-- Botões exclusivos para Vídeo -->
+          <div id="acoesVideo" style="display: none;">
+            <button class="btn btn-purple" id="btnExportarVideo" onclick="exportarVideoComFaixas()">
+              🎬 Baixar Vídeo com Faixas
+            </button>
+          </div>
+
           <button class="btn btn-subtle" onclick="fecharEditor()">Voltar ao Calendário</button>
         </div>
       </div>
 
       <!-- PALCO DE VISUALIZAÇÃO -->
       <div class="editor-stage" id="stageContainer">
-        <canvas id="canvasFabric"></canvas>
+        <!-- Canvas para Imagens e Carrosséis -->
+        <div id="wrapperCanvasFabric">
+          <canvas id="canvasFabric"></canvas>
+        </div>
+
+        <!-- Palco para Vídeos -->
+        <div class="video-stage-box" id="videoStageBox">
+          <div class="video-faixa" id="videoFaixaTopo">SEU TEXTO PRINCIPAL AQUI</div>
+          <div class="video-media-area">
+            <video id="videoPlayerEditor" loop muted playsinline autoplay></video>
+          </div>
+          <div class="video-faixa video-faixa-base" id="videoFaixaBase">
+            <span id="videoIconeWhats" style="display: inline-flex; align-items: center;">
+              <svg width="18" height="18" viewBox="0 0 448 512"><path fill="#25D366" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            </span>
+            <span id="videoTextoTelefone">(81) 99999-9999</span>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -747,12 +888,16 @@
   <script>
     let canvas;
     let nomeArquivoAtual = 'arte-editada.png';
+    let dataChaveAtual = '';
+    let tipoMidiaAtual = 'imagem'; // 'imagem', 'carrossel' ou 'video'
+    let listaArquivosCarrossel = [];
+    let indiceCarrosselAtual = 0;
+
     let imagemCarregadaObj = null;
     let faixaTopoObj, faixaBaseObj, textoTopoObj;
     let grupoWhatsAppObj, textoTelefoneObj, iconeWhatsObj;
 
-    // Estado atual de estilo e formato
-    let formatoAtual = 'feed'; // 'feed' ou 'shorts'
+    let formatoAtual = 'feed';
     let corFaixaAtual = 'rgba(15, 23, 42, 0.94)';
     let corLetraAtual = '#ffffff';
 
@@ -760,6 +905,10 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <path fill="#25D366" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
       </svg>`;
+
+    const legendasPorData = {
+      "2026-11-20": `Você sabia que a cor da sua roupa à noite pode salvar a sua vida? 👀🌙\n\n⚫ Preto: Invisível\n🔵 Azul: 16m\n🔴 Vermelho: 24m\n🟡 Amarelo: 37m\n⚪ Branco: 55m\n🟢 Verde / Refletivo: 130m!\n\n#TransitoSeguro #SegurancaViaria`
+    };
 
     const diasComemorativos = {
       "01-01": { evento: "Ano Novo / Paz no Trânsito", eixo: "Conscientização" },
@@ -806,17 +955,11 @@
 
     function alternarTelaCheia() {
       if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          document.documentElement.webkitRequestFullscreen();
-        }
+        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+        else if (document.documentElement.webkitRequestFullscreen) document.documentElement.webkitRequestFullscreen();
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        }
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
       }
     }
 
@@ -833,8 +976,9 @@
         texto.innerText = 'Tela Cheia';
       }
 
-      if (document.getElementById('modalEditor').style.display === 'flex' && imagemCarregadaObj) {
-        setTimeout(ajustarCanvasNaTela, 100);
+      if (document.getElementById('modalEditor').style.display === 'flex') {
+        if (tipoMidiaAtual === 'video') ajustarPalcoVideo();
+        else if (imagemCarregadaObj) setTimeout(ajustarCanvasNaTela, 100);
       }
     }
 
@@ -843,7 +987,66 @@
       atualizarGradeDoMes();
     }
 
-    function atualizarGradeDoMes() {
+    // Verifica se um arquivo existe na pasta usando Image ou Video
+    function verificarImagemExiste(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(url);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+    }
+
+    function verificarVideoExiste(url) {
+      return new Promise((resolve) => {
+        const vid = document.createElement('video');
+        vid.preload = 'metadata';
+        vid.onloadedmetadata = () => resolve(url);
+        vid.onerror = () => resolve(null);
+        vid.src = url;
+      });
+    }
+
+    // Detecta automaticamente se o dia tem: Vídeo, Carrossel (-1, -2...) ou Imagem Única
+    async function detectarMidiaDoDia(baseNome) {
+      // 1. Testa se existe vídeo (.mp4 ou .webm)
+      for (const ext of ['.mp4', '.webm']) {
+        const videoUrl = await verificarVideoExiste(`${baseNome}${ext}`);
+        if (videoUrl) {
+          return { tipo: 'video', arquivos: [videoUrl] };
+        }
+      }
+
+      // 2. Testa se existe carrossel (baseNome-1.jpg, baseNome-2.jpg, ...)
+      const laminas = [];
+      for (let i = 1; i <= 10; i++) {
+        let achouLamina = null;
+        for (const ext of ['.jpg', '.jpeg', '.png', '.jpg.jpg']) {
+          achouLamina = await verificarImagemExiste(`${baseNome}-${i}${ext}`);
+          if (achouLamina) break;
+        }
+        if (achouLamina) {
+          laminas.push(achouLamina);
+        } else {
+          break;
+        }
+      }
+      if (laminas.length > 0) {
+        return { tipo: 'carrossel', arquivos: laminas };
+      }
+
+      // 3. Testa imagem única padrão (baseNome.jpg, .png...)
+      for (const ext of ['.jpg.jpg', '.jpg', '.jpeg', '.png']) {
+        const imgUrl = await verificarImagemExiste(`${baseNome}${ext}`);
+        if (imgUrl) {
+          return { tipo: 'imagem', arquivos: [imgUrl] };
+        }
+      }
+
+      return null;
+    }
+
+    async function atualizarGradeDoMes() {
       const ano = dataAtualVisualizada.getFullYear();
       const mes = dataAtualVisualizada.getMonth() + 1;
       const mesFormatado = String(mes).padStart(2, '0');
@@ -865,18 +1068,17 @@
 
         const chaveEvento = `${mesFormatado}-${diaZero}`;
         const eventoInfo = diasComemorativos[chaveEvento];
-
         const baseNome = `${ano}-${mesFormatado}-${diaZero}`;
-        const extensoes = ['.jpg.jpg', '.jpg', '.jpeg', '.png'];
 
         const card = document.createElement('div');
         card.className = `card-dia ${eventoInfo ? 'dia-especial' : ''}`;
-
         card.innerHTML = `
           <div class="dia-tag">${etiquetaData}</div>
-          ${eventoInfo ? `<div class="badge-especial">⭐ Especial</div>` : ''}
-          <div class="thumb-wrapper">
-            <img src="${baseNome}${extensoes[0]}" alt="${etiquetaData}">
+          <div class="badges-direita" id="badges-${baseNome}">
+            ${eventoInfo ? `<div class="badge-especial">⭐ Especial</div>` : ''}
+          </div>
+          <div class="thumb-wrapper" id="thumb-${baseNome}">
+            <span class="sem-arte">Verificando...</span>
           </div>
           ${eventoInfo ? `
             <div class="info-evento-card">
@@ -885,26 +1087,32 @@
             </div>
           ` : ''}
         `;
-
-        const imgEl = card.querySelector('.thumb-wrapper img');
-        let indexExtensao = 0;
-
-        imgEl.onerror = function() {
-          indexExtensao++;
-          if (indexExtensao < extensoes.length) {
-            this.src = `${baseNome}${extensoes[indexExtensao]}`;
-          } else {
-            this.parentElement.innerHTML = '<span class="sem-arte">Sem arte</span>';
-            card.onclick = null;
-          }
-        };
-
-        imgEl.onload = function() {
-          const caminhoFinal = this.src;
-          card.onclick = () => carregarNoEditor(caminhoFinal, eventoInfo);
-        };
-
         grade.appendChild(card);
+
+        // Detecção assíncrona das mídias do dia
+        detectarMidiaDoDia(baseNome).then((midia) => {
+          const thumbEl = document.getElementById(`thumb-${baseNome}`);
+          const badgesEl = document.getElementById(`badges-${baseNome}`);
+          if (!thumbEl) return;
+
+          if (!midia) {
+            thumbEl.innerHTML = '<span class="sem-arte">Sem arte</span>';
+            card.style.cursor = 'default';
+            return;
+          }
+
+          if (midia.tipo === 'video') {
+            badgesEl.innerHTML += `<div class="badge-tipo video">🎬 Vídeo</div>`;
+            thumbEl.innerHTML = `<video src="${midia.arquivos[0]}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()"></video>`;
+          } else if (midia.tipo === 'carrossel') {
+            badgesEl.innerHTML += `<div class="badge-tipo">📑 Carrossel (${midia.arquivos.length})</div>`;
+            thumbEl.innerHTML = `<img src="${midia.arquivos[0]}" alt="${etiquetaData}">`;
+          } else {
+            thumbEl.innerHTML = `<img src="${midia.arquivos[0]}" alt="${etiquetaData}">`;
+          }
+
+          card.onclick = () => abrirNoEditor(midia, eventoInfo, baseNome);
+        });
       }
     }
 
@@ -913,13 +1121,18 @@
       document.getElementById('btnFormatoFeed').classList.toggle('active', novoFormato === 'feed');
       document.getElementById('btnFormatoShorts').classList.toggle('active', novoFormato === 'shorts');
 
-      if (imagemCarregadaObj) {
+      if (tipoMidiaAtual === 'video') {
+        ajustarPalcoVideo();
+      } else if (imagemCarregadaObj) {
         ajustarCanvasNaTela();
       }
     }
 
-    function carregarNoEditor(urlImagem, eventoInfo) {
-      nomeArquivoAtual = urlImagem.substring(urlImagem.lastIndexOf('/') + 1);
+    function abrirNoEditor(midia, eventoInfo, dataChave) {
+      tipoMidiaAtual = midia.tipo;
+      dataChaveAtual = dataChave;
+      listaArquivosCarrossel = midia.arquivos;
+      indiceCarrosselAtual = 0;
 
       const boxDestaque = document.getElementById('boxEventoDestaque');
       const inputLegenda = document.getElementById('inputLegenda');
@@ -930,21 +1143,111 @@
         document.getElementById('txtEventoEixo').innerText = `Eixo: ${eventoInfo.eixo}`;
         boxDestaque.style.display = 'flex';
         document.getElementById('inputTextoTopo').value = eventoInfo.evento.toUpperCase();
-        inputLegenda.value = `${eventoInfo.evento} 🚦\n\nNo trânsito, cada atitude faz a diferença para salvar vidas.\n\n📲 Fale conosco pelo WhatsApp: ${telefoneAtual}\n\n#TransitoSeguro #EducacaoNoTransito #SegurancaViaria`;
       } else {
         boxDestaque.style.display = 'none';
         document.getElementById('inputTextoTopo').value = 'SEU TEXTO PRINCIPAL AQUI';
+      }
+
+      // Preenche a legenda
+      if (dataChave && legendasPorData[dataChave]) {
+        inputLegenda.value = `${legendasPorData[dataChave]}\n\n📲 WhatsApp: ${telefoneAtual}`;
+      } else if (eventoInfo && eventoInfo.legenda) {
+        inputLegenda.value = `${eventoInfo.legenda}\n\n📲 WhatsApp: ${telefoneAtual}`;
+      } else if (eventoInfo) {
+        inputLegenda.value = `${eventoInfo.evento} 🚦\n\nNo trânsito, cada atitude faz a diferença para salvar vidas.\n\n📲 Fale conosco pelo WhatsApp: ${telefoneAtual}\n\n#TransitoSeguro #EducacaoNoTransito`;
+      } else {
         inputLegenda.value = `Confira nossa dica de hoje! 🚗✨\n\n📲 Entre em contato pelo WhatsApp: ${telefoneAtual}\n\n#Transito #DirecaoDefensiva #Seguranca`;
       }
 
-      fabric.Image.fromURL(urlImagem, function(img) {
+      // Configura interface conforme o tipo de mídia (Vídeo vs Carrossel vs Imagem)
+      const isVideo = (tipoMidiaAtual === 'video');
+      const isCarrossel = (tipoMidiaAtual === 'carrossel');
+
+      document.getElementById('tituloSidebarEditor').innerText = isVideo
+        ? 'Personalizar Vídeo'
+        : (isCarrossel ? 'Personalizar Carrossel' : 'Personalizar Arte');
+
+      document.getElementById('boxCarrosselNav').style.display = isCarrossel ? 'flex' : 'none';
+      document.getElementById('btnBaixarTodasCarrossel').style.display = isCarrossel ? 'inline-flex' : 'none';
+      document.getElementById('acoesImagem').style.display = isVideo ? 'none' : 'block';
+      document.getElementById('acoesVideo').style.display = isVideo ? 'block' : 'none';
+
+      document.getElementById('wrapperCanvasFabric').style.display = isVideo ? 'none' : 'block';
+      document.getElementById('videoStageBox').style.display = isVideo ? 'flex' : 'none';
+
+      document.getElementById('modalEditor').style.display = 'flex';
+
+      if (isVideo) {
+        const videoEl = document.getElementById('videoPlayerEditor');
+        nomeArquivoAtual = midia.arquivos[0].substring(midia.arquivos[0].lastIndexOf('/') + 1);
+        videoEl.src = midia.arquivos[0];
+        videoEl.onloadedmetadata = () => ajustarPalcoVideo();
+      } else {
+        carregarLaminaAtualNoCanvas();
+      }
+    }
+
+    function mudarLaminaCarrossel(delta) {
+      if (tipoMidiaAtual !== 'carrossel' || listaArquivosCarrossel.length === 0) return;
+      indiceCarrosselAtual = (indiceCarrosselAtual + delta + listaArquivosCarrossel.length) % listaArquivosCarrossel.length;
+      carregarLaminaAtualNoCanvas();
+    }
+
+    function carregarLaminaAtualNoCanvas() {
+      const urlLamina = listaArquivosCarrossel[indiceCarrosselAtual];
+      nomeArquivoAtual = urlLamina.substring(urlLamina.lastIndexOf('/') + 1);
+
+      if (tipoMidiaAtual === 'carrossel') {
+        document.getElementById('txtIndicadorCarrossel').innerText =
+          `Lâmina ${indiceCarrosselAtual + 1} de ${listaArquivosCarrossel.length}`;
+      }
+
+      fabric.Image.fromURL(urlLamina, function(img) {
         if (!img || !img.width) return;
         imagemCarregadaObj = img;
-
-        document.getElementById('modalEditor').style.display = 'flex';
-
-        setTimeout(ajustarCanvasNaTela, 80);
+        setTimeout(ajustarCanvasNaTela, 50);
       });
+    }
+
+    function ajustarPalcoVideo() {
+      const stage = document.getElementById('stageContainer');
+      const box = document.getElementById('videoStageBox');
+      const videoEl = document.getElementById('videoPlayerEditor');
+      const faixaTopo = document.getElementById('videoFaixaTopo');
+      const faixaBase = document.getElementById('videoFaixaBase');
+
+      const stageW = Math.max(stage.clientWidth - 28, 220);
+      const stageH = Math.max(stage.clientHeight - 28, 220);
+
+      const vw = videoEl.videoWidth || 1080;
+      const vh = videoEl.videoHeight || 1920;
+      const aspect = (formatoAtual === 'shorts') ? (9 / 16) : (vw / vh);
+
+      let boxW, boxH;
+      if (stageW / stageH > aspect) {
+        boxH = stageH;
+        boxW = stageH * aspect;
+      } else {
+        boxW = stageW;
+        boxH = stageW / aspect;
+      }
+
+      box.style.width = `${boxW}px`;
+      box.style.height = `${boxH}px`;
+
+      const alturaFaixa = Math.max(boxH * 0.11, 44);
+      faixaTopo.style.height = `${alturaFaixa}px`;
+      faixaBase.style.height = `${alturaFaixa}px`;
+
+      faixaTopo.style.background = corFaixaAtual;
+      faixaBase.style.background = corFaixaAtual;
+      faixaTopo.style.color = corLetraAtual;
+      faixaBase.style.color = corLetraAtual;
+
+      faixaTopo.innerText = document.getElementById('inputTextoTopo').value;
+      document.getElementById('videoTextoTelefone').innerText = document.getElementById('inputTelefone').value;
+      document.getElementById('videoIconeWhats').style.display =
+        document.getElementById('chkIconeWhats').checked ? 'inline-flex' : 'none';
     }
 
     function copiarLegenda() {
@@ -983,7 +1286,6 @@
       const stageW = Math.max(stage.clientWidth - 28, 220);
       const stageH = Math.max(stage.clientHeight - 28, 220);
 
-      // Define a proporção conforme o formato escolhido: 9:16 para Shorts ou original para Feed
       const aspect = (formatoAtual === 'shorts')
         ? (9 / 16)
         : (imagemCarregadaObj.width / imagemCarregadaObj.height);
@@ -1002,7 +1304,6 @@
       canvas.clear();
       canvas.setBackgroundColor('#0f172a', canvas.renderAll.bind(canvas));
 
-      // Altura das faixas superior e inferior
       const alturaFaixa = (formatoAtual === 'shorts')
         ? Math.max(canvasH * 0.10, 44)
         : Math.max(canvasH * 0.125, 48);
@@ -1010,7 +1311,6 @@
       const espacoUtilH = canvasH - (alturaFaixa * 2) - 8;
 
       if (formatoAtual === 'shorts') {
-        // 1. Cria um fundo preenchido com a própria imagem ampliada e desfocada
         imagemCarregadaObj.clone(function(bgImg) {
           const escalaBg = Math.max(canvasW / bgImg.width, canvasH / bgImg.height) * 1.08;
           bgImg.set({
@@ -1032,7 +1332,6 @@
           canvas.renderAll();
         });
 
-        // 2. Centraliza a imagem principal mantendo sua proporção original sem distorcer
         const escalaPrincipal = Math.min(
           canvasW / imagemCarregadaObj.width,
           espacoUtilH / imagemCarregadaObj.height
@@ -1051,7 +1350,6 @@
           evented: false
         });
       } else {
-        // Modo Feed original
         const escalaH = espacoUtilH / imagemCarregadaObj.height;
         const escalaW = canvasW / imagemCarregadaObj.width;
 
@@ -1071,7 +1369,6 @@
     }
 
     function construirEstruturaPadrao(alturaFaixa) {
-      // 1. Faixa Superior
       faixaTopoObj = new fabric.Rect({
         left: 0,
         top: 0,
@@ -1083,7 +1380,6 @@
       });
       canvas.add(faixaTopoObj);
 
-      // 2. Texto da Faixa Superior
       const textoTopoValor = document.getElementById('inputTextoTopo').value;
       const tamanhoFonteBase = (formatoAtual === 'shorts')
         ? Math.max(canvas.width * 0.048, 12)
@@ -1100,7 +1396,6 @@
       canvas.add(textoTopoObj);
       ajustarEscalaTextoTopo();
 
-      // 3. Faixa Inferior
       faixaBaseObj = new fabric.Rect({
         left: 0,
         top: canvas.height - alturaFaixa,
@@ -1112,7 +1407,6 @@
       });
       canvas.add(faixaBaseObj);
 
-      // 4. WhatsApp + Telefone
       const telefoneValor = document.getElementById('inputTelefone').value;
       const exibirIcone = document.getElementById('chkIconeWhats').checked;
 
@@ -1165,6 +1459,10 @@
     }
 
     function atualizarTextoTopo(valor) {
+      if (tipoMidiaAtual === 'video') {
+        document.getElementById('videoFaixaTopo').innerText = valor;
+        return;
+      }
       if (textoTopoObj) {
         textoTopoObj.set('text', valor);
         ajustarEscalaTextoTopo();
@@ -1173,6 +1471,10 @@
     }
 
     function atualizarTelefone(valor) {
+      if (tipoMidiaAtual === 'video') {
+        document.getElementById('videoTextoTelefone').innerText = valor;
+        return;
+      }
       if (textoTelefoneObj && grupoWhatsAppObj) {
         textoTelefoneObj.set('text', valor);
         reposicionarGrupoWhatsApp();
@@ -1180,6 +1482,10 @@
     }
 
     function alternarIconeWhatsApp(ativo) {
+      if (tipoMidiaAtual === 'video') {
+        document.getElementById('videoIconeWhats').style.display = ativo ? 'inline-flex' : 'none';
+        return;
+      }
       if (!grupoWhatsAppObj || !iconeWhatsObj || !textoTelefoneObj) return;
 
       if (ativo) {
@@ -1201,6 +1507,11 @@
 
     function alterarCorFaixas(cor) {
       corFaixaAtual = cor;
+      if (tipoMidiaAtual === 'video') {
+        document.getElementById('videoFaixaTopo').style.background = cor;
+        document.getElementById('videoFaixaBase').style.background = cor;
+        return;
+      }
       if (faixaTopoObj) faixaTopoObj.set('fill', cor);
       if (faixaBaseObj) faixaBaseObj.set('fill', cor);
       canvas.renderAll();
@@ -1208,6 +1519,11 @@
 
     function alterarCorLetras(cor) {
       corLetraAtual = cor;
+      if (tipoMidiaAtual === 'video') {
+        document.getElementById('videoFaixaTopo').style.color = cor;
+        document.getElementById('videoFaixaBase').style.color = cor;
+        return;
+      }
       if (textoTopoObj) textoTopoObj.set('fill', cor);
       if (textoTelefoneObj && grupoWhatsAppObj) {
         textoTelefoneObj.set('fill', cor);
@@ -1218,11 +1534,13 @@
 
     function fecharEditor() {
       document.getElementById('modalEditor').style.display = 'none';
+      const videoEl = document.getElementById('videoPlayerEditor');
+      videoEl.pause();
+      videoEl.src = '';
       canvas.clear();
       imagemCarregadaObj = null;
     }
 
-    // Gera a imagem em alta resolução (1080x1920 para Shorts ou resolução original da foto para Feed)
     function gerarDataURLAltaQualidade() {
       canvas.discardActiveObject();
       canvas.renderAll();
@@ -1282,6 +1600,131 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+
+    // Baixa todas as lâminas de um carrossel sequencialmente com as mesmas cores e textos
+    async function baixarTodasLaminasCarrossel() {
+      if (tipoMidiaAtual !== 'carrossel') return;
+
+      for (let i = 0; i < listaArquivosCarrossel.length; i++) {
+        indiceCarrosselAtual = i;
+        await new Promise((resolve) => {
+          const urlLamina = listaArquivosCarrossel[i];
+          nomeArquivoAtual = urlLamina.substring(urlLamina.lastIndexOf('/') + 1);
+          document.getElementById('txtIndicadorCarrossel').innerText =
+            `Baixando ${i + 1} de ${listaArquivosCarrossel.length}...`;
+
+          fabric.Image.fromURL(urlLamina, function(img) {
+            imagemCarregadaObj = img;
+            ajustarCanvasNaTela();
+            setTimeout(() => {
+              baixarImagemFinal();
+              resolve();
+            }, 350);
+          });
+        });
+      }
+
+      document.getElementById('txtIndicadorCarrossel').innerText =
+        `Lâmina ${indiceCarrosselAtual + 1} de ${listaArquivosCarrossel.length}`;
+    }
+
+    // Renderiza o vídeo + faixas superior e inferior em tempo real e faz o download
+    async function exportarVideoComFaixas() {
+      const videoEl = document.getElementById('videoPlayerEditor');
+      const btnExportar = document.getElementById('btnExportarVideo');
+
+      if (!videoEl || !videoEl.duration) return;
+
+      btnExportar.disabled = true;
+      btnExportar.innerText = '⏳ Renderizando vídeo...';
+
+      const offCanvas = document.createElement('canvas');
+      const vw = videoEl.videoWidth || 720;
+      const vh = videoEl.videoHeight || 1280;
+
+      if (formatoAtual === 'shorts') {
+        offCanvas.width = 720;
+        offCanvas.height = 1280;
+      } else {
+        offCanvas.width = vw;
+        offCanvas.height = vh;
+      }
+
+      const ctx = offCanvas.getContext('2d');
+      const alturaFaixa = Math.round(offCanvas.height * 0.11);
+      const textoTopo = document.getElementById('inputTextoTopo').value;
+      const telefone = document.getElementById('inputTelefone').value;
+
+      videoEl.loop = false;
+      videoEl.currentTime = 0;
+
+      const stream = offCanvas.captureStream(30);
+      const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+      const chunks = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const sufixo = formatoAtual === 'shorts' ? '-shorts' : '';
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'video-' + nomeArquivoAtual.replace(/\.[^/.]+$/, "") + sufixo + '.webm';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        videoEl.loop = true;
+        videoEl.play();
+        btnExportar.disabled = false;
+        btnExportar.innerText = '🎬 Baixar Vídeo com Faixas';
+      };
+
+      recorder.start();
+      await videoEl.play();
+
+      function desenharFrame() {
+        if (videoEl.paused || videoEl.ended) {
+          recorder.stop();
+          return;
+        }
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+
+        const areaH = offCanvas.height - (alturaFaixa * 2);
+        const scale = Math.min(offCanvas.width / vw, areaH / vh);
+        const drawW = vw * scale;
+        const drawH = vh * scale;
+        const drawX = (offCanvas.width - drawW) / 2;
+        const drawY = alturaFaixa + (areaH - drawH) / 2;
+
+        ctx.drawImage(videoEl, drawX, drawY, drawW, drawH);
+
+        // Faixa Superior
+        ctx.fillStyle = corFaixaAtual;
+        ctx.fillRect(0, 0, offCanvas.width, alturaFaixa);
+        ctx.fillStyle = corLetraAtual;
+        ctx.font = `800 ${Math.round(alturaFaixa * 0.34)}px "Plus Jakarta Sans", Arial, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(textoTopo, offCanvas.width / 2, alturaFaixa / 2, offCanvas.width * 0.9);
+
+        // Faixa Inferior
+        ctx.fillStyle = corFaixaAtual;
+        ctx.fillRect(0, offCanvas.height - alturaFaixa, offCanvas.width, alturaFaixa);
+        ctx.fillStyle = corLetraAtual;
+        ctx.font = `700 ${Math.round(alturaFaixa * 0.34)}px "Plus Jakarta Sans", Arial, sans-serif`;
+        ctx.fillText(telefone, offCanvas.width / 2, offCanvas.height - (alturaFaixa / 2), offCanvas.width * 0.9);
+
+        requestAnimationFrame(desenharFrame);
+      }
+
+      desenharFrame();
     }
   </script>
 </body>
