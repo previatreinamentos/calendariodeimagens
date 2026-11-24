@@ -349,16 +349,16 @@
 
     /* Barra Lateral Esquerda */
     .sidebar {
-      width: 375px;
-      min-width: 340px;
-      max-width: 400px;
+      width: 395px;
+      min-width: 350px;
+      max-width: 415px;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       padding: 16px;
       overflow-y: auto;
-      gap: 11px;
+      gap: 12px;
       flex-shrink: 0;
     }
     .sidebar-header {
@@ -392,7 +392,36 @@
       border-color: #fca5a5;
     }
 
-    /* Painel Exclusivo de Promoção na Sidebar */
+    /* Blocos Separados na Sidebar */
+    .control-section-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--surface-subtle);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+    .control-section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .control-section-title small {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: none;
+    }
+
+    /* Bloco Exclusivo de Promoção */
     .promo-controls-box {
       display: none;
       flex-direction: column;
@@ -411,6 +440,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #fed7aa;
     }
     .promo-controls-title small {
       font-size: 0.66rem;
@@ -467,6 +498,56 @@
       background: var(--accent-orange);
       color: #ffffff;
       border-color: var(--accent-orange);
+    }
+
+    /* Grade de Selos Sazonais (Promoções) */
+    .selos-sazonais-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .btn-selo-sazonal {
+      padding: 7px 8px;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #7c2d12;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .btn-selo-sazonal:hover {
+      background: #ffedd5;
+      border-color: var(--accent-orange);
+      transform: translateY(-1px);
+    }
+    .btn-selo-sazonal.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+    .btn-remover-selo {
+      padding: 6px 8px;
+      border: 1px dashed #fca5a5;
+      border-radius: 8px;
+      background: #fef2f2;
+      color: #b91c1c;
+      font-family: inherit;
+      font-size: 0.71rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      grid-column: span 2;
+      transition: all 0.15s;
+    }
+    .btn-remover-selo:hover {
+      background: #fee2e2;
     }
 
     /* Navegação do Carrossel na Sidebar */
@@ -540,7 +621,7 @@
       align-items: center;
     }
     .form-group label {
-      font-size: 0.71rem;
+      font-size: 0.70rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -550,7 +631,7 @@
     .form-group textarea {
       width: 100%;
       padding: 8px 11px;
-      background: var(--surface-subtle);
+      background: #ffffff;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
@@ -559,7 +640,13 @@
       font-weight: 500;
       transition: all 0.2s;
     }
-    .form-group textarea {
+    .textarea-topo {
+      resize: vertical;
+      min-height: 54px;
+      line-height: 1.3;
+      font-weight: 700 !important;
+    }
+    .textarea-legenda {
       resize: vertical;
       min-height: 74px;
       line-height: 1.4;
@@ -574,7 +661,7 @@
 
     /* Botão Copiar Legenda */
     .btn-copy-caption {
-      background: var(--surface-subtle);
+      background: #ffffff;
       color: var(--primary);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -639,11 +726,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--surface-subtle);
+      background: #ffffff;
       padding: 6px 10px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      margin-top: 2px;
     }
     .toggle-row span {
       font-size: 0.76rem;
@@ -688,10 +774,10 @@
       padding: 2px 0;
     }
     .color-dot {
-      width: 24px;
-      height: 24px;
+      width: 23px;
+      height: 23px;
       border-radius: 50%;
-      border: 2px solid #e2e8f0;
+      border: 2px solid #cbd5e1;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
@@ -795,6 +881,8 @@
       padding: 8px 14px;
       text-align: center;
       font-weight: 800;
+      white-space: pre-line;
+      line-height: 1.2;
       z-index: 2;
       flex-shrink: 0;
     }
@@ -865,12 +953,12 @@
 
   <div id="grade" class="grid-calendario"></div>
 
-  <!-- SEÇÃO DE IMAGENS PARA PROMOÇÕES (ABAIXO DO CALENDÁRIO) -->
+  <!-- SEÇÃO DE IMAGENS PARA PROMOÇÕES -->
   <section class="secao-promocoes">
     <div class="secao-promocoes-header">
       <div>
         <h2>🏷️ Artes de Promoções & Ofertas</h2>
-        <p>Clique em uma arte promocional para editar valores, "De / Por", categoria (Carro/Moto) e textos no centro da imagem</p>
+        <p>Clique em uma arte promocional para editar valores, botão "Garantir minha vaga" movível e selos de datas comerciais (Black Friday, Natal, Maio Amarelo, etc.)</p>
       </div>
     </div>
     <div id="gradePromocoes" class="grid-calendario"></div>
@@ -900,11 +988,44 @@
           <span class="eixo" id="txtEventoEixo">--</span>
         </div>
 
-        <!-- CONTROLES ESPECÍFICOS DE PROMOÇÃO (BLOCO CENTRAL) -->
+        <!-- Seletor de Formato -->
+        <div class="form-group">
+          <label>Formato da Publicação</label>
+          <div class="format-selector">
+            <button type="button" class="btn-format active" id="btnFormatoFeed" onclick="alterarFormato('feed')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              Feed (Original)
+            </button>
+            <button type="button" class="btn-format" id="btnFormatoShorts" onclick="alterarFormato('shorts')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="6" y="2" width="12" height="20" rx="2"/><polygon points="10 9 15 12 10 15 10 9" fill="currentColor"/></svg>
+              Shorts (9:16)
+            </button>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             BLOCO 1: CONTROLES EXCLUSIVOS DA PROMOÇÃO (MEIO DA IMAGEM)
+             =============================================================== -->
         <div class="promo-controls-box" id="boxControlesPromo">
           <div class="promo-controls-title">
-            <span>🏷️ Oferta no Meio da Imagem</span>
-            <small>Arraste na arte para mover</small>
+            <span>🏷️ Bloco Central da Promoção</span>
+            <small>Arraste cada item na arte</small>
+          </div>
+
+          <!-- Galeria de Selos Sazonais (Sazonalidade de Mercado) -->
+          <div class="form-group">
+            <label>Selo Sazonal por Cima da Imagem</label>
+            <div class="selos-sazonais-grid">
+              <button type="button" class="btn-selo-sazonal" data-selo="blackfriday" onclick="aplicarSeloSazonal('blackfriday', this)">🖤 Black Friday</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="natal" onclick="aplicarSeloSazonal('natal', this)">🎄 Natal</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="maes" onclick="aplicarSeloSazonal('maes', this)">💐 Dia das Mães</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="pais" onclick="aplicarSeloSazonal('pais', this)">👔 Dia dos Pais</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="maioamarelo" onclick="aplicarSeloSazonal('maioamarelo', this)">🎗️ Maio Amarelo</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="consumidor" onclick="aplicarSeloSazonal('consumidor', this)">🛍️ Mês do Consumidor</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="ferias" onclick="aplicarSeloSazonal('ferias', this)">☀️ Férias / Verão</button>
+              <button type="button" class="btn-selo-sazonal" data-selo="anonovo" onclick="aplicarSeloSazonal('anonovo', this)">🥂 Ano Novo</button>
+              <button type="button" class="btn-remover-selo" id="btnRemoverSelo" style="display: none;" onclick="removerSeloSazonal()">✕ Remover Selo Sazonal</button>
+            </div>
           </div>
 
           <div class="promo-grid-2">
@@ -932,9 +1053,9 @@
           <div class="form-group">
             <label>Modalidade (Carro / Moto)</label>
             <div class="modalidade-pills">
-              <button type="button" class="btn-mod" id="btnModCarro" onclick="selecionarModalidade('SÓ CARRO\n(CAT. B)', this)">Só Carro</button>
-              <button type="button" class="btn-mod" id="btnModMoto" onclick="selecionarModalidade('SÓ MOTO\n(CAT. A)', this)">Só Moto</button>
-              <button type="button" class="btn-mod active" id="btnModAmbos" onclick="selecionarModalidade('CARRO OU\nMOTO (A/B)', this)">Carro e Moto</button>
+              <button type="button" class="btn-mod" id="btnModCarro" onclick="selecionarModalidade('SÓ CARRO (CAT. B)', this)">Só Carro</button>
+              <button type="button" class="btn-mod" id="btnModMoto" onclick="selecionarModalidade('SÓ MOTO (CAT. A)', this)">Só Moto</button>
+              <button type="button" class="btn-mod active" id="btnModAmbos" onclick="selecionarModalidade('CARRO OU MOTO (A/B)', this)">Carro e Moto</button>
             </div>
             <input type="text" id="promoModalidade" value="CARRO OU MOTO (A/B)" oninput="atualizarBlocoPromocao()">
           </div>
@@ -949,112 +1070,147 @@
             <input type="text" id="promoSelo2" value="Busca e leva de volta em Francisco Morato" oninput="atualizarBlocoPromocao()">
           </div>
 
+          <!-- Botão CTA Separado e Movível -->
           <div class="form-group">
-            <label>Botão de Ação (CTA)</label>
-            <input type="text" id="promoCta" value="Garantir minha vaga" oninput="atualizarBlocoPromocao()">
+            <label>Botão de Ação Separado (Movível na Arte)</label>
+            <input type="text" id="promoCta" value="Garantir minha vaga" oninput="atualizarBotaoCtaSeparado()">
+          </div>
+
+          <!-- Cores Exclusivas do Bloco da Promoção -->
+          <div class="form-group">
+            <label>Cor de Destaque (Botão & Categoria)</label>
+            <div class="palette-row">
+              <div class="color-dot" style="background: #ff6b00;" title="Laranja" onclick="alterarCorDestaquePromo('#ff6b00')"></div>
+              <div class="color-dot" style="background: #e11d48;" title="Vermelho" onclick="alterarCorDestaquePromo('#e11d48')"></div>
+              <div class="color-dot" style="background: #2563eb;" title="Azul Royal" onclick="alterarCorDestaquePromo('#2563eb')"></div>
+              <div class="color-dot" style="background: #10b981;" title="Verde Esmeralda" onclick="alterarCorDestaquePromo('#10b981')"></div>
+              <div class="color-dot" style="background: #9333ea;" title="Roxo" onclick="alterarCorDestaquePromo('#9333ea')"></div>
+              <div class="color-dot" style="background: #f59e0b;" title="Amarelo Ouro" onclick="alterarCorDestaquePromo('#f59e0b')"></div>
+              <div class="color-dot" style="background: #0f172a;" title="Preto Grafite" onclick="alterarCorDestaquePromo('#0f172a')"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Cor do Valor & Chamada</label>
+            <div class="palette-row">
+              <div class="color-dot" style="background: #ffffff;" title="Branco" onclick="alterarCorValorPromo('#ffffff')"></div>
+              <div class="color-dot" style="background: #fde047;" title="Amarelo Vibrante" onclick="alterarCorValorPromo('#fde047')"></div>
+              <div class="color-dot" style="background: #38bdf8;" title="Azul Claro" onclick="alterarCorValorPromo('#38bdf8')"></div>
+              <div class="color-dot" style="background: #34d399;" title="Verde Menta" onclick="alterarCorValorPromo('#34d399')"></div>
+              <div class="color-dot" style="background: #0f172a;" title="Preto Grafite" onclick="alterarCorValorPromo('#0f172a')"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Seletor de Formato -->
-        <div class="form-group">
-          <label>Formato da Publicação</label>
-          <div class="format-selector">
-            <button type="button" class="btn-format active" id="btnFormatoFeed" onclick="alterarFormato('feed')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-              Feed (Original)
-            </button>
-            <button type="button" class="btn-format" id="btnFormatoShorts" onclick="alterarFormato('shorts')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="6" y="2" width="12" height="20" rx="2"/><polygon points="10 9 15 12 10 15 10 9" fill="currentColor"/></svg>
-              Shorts (9:16)
-            </button>
+        <!-- ===============================================================
+             BLOCO 2: CONTROLES EXCLUSIVOS DAS FAIXAS (TOPO & BASE)
+             =============================================================== -->
+        <div class="control-section-card">
+          <div class="control-section-title">
+            <span>📏 Faixas Superior e Inferior</span>
+            <small>Use Enter para quebrar linha</small>
           </div>
-        </div>
 
-        <!-- Opção de exibir ou ocultar as faixas (útil para promoções com arte cheia) -->
-        <div class="toggle-row" id="rowToggleFaixas" style="display: none;">
-          <span>Exibir faixas no topo e base</span>
-          <label class="switch">
-            <input type="checkbox" id="chkExibirFaixas" checked onchange="alternarFaixasTopoBase(this.checked)">
-            <span class="slider"></span>
-          </label>
-        </div>
-
-        <!-- Texto Superior -->
-        <div class="form-group">
-          <label>Texto Superior</label>
-          <input type="text" id="inputTextoTopo" value="SEU TEXTO PRINCIPAL AQUI" oninput="atualizarTextoTopo(this.value)">
-        </div>
-
-        <!-- Telefone & Controle do Ícone WhatsApp -->
-        <div class="form-group">
-          <label>WhatsApp / Contato</label>
-          <input type="text" id="inputTelefone" value="(81) 99999-9999" oninput="atualizarTelefone(this.value)">
-          
-          <div class="toggle-row">
-            <span>Exibir ícone do WhatsApp</span>
+          <div class="toggle-row" id="rowToggleFaixas" style="display: none;">
+            <span>Exibir faixas no topo e base</span>
             <label class="switch">
-              <input type="checkbox" id="chkIconeWhats" checked onchange="alternarIconeWhatsApp(this.checked)">
+              <input type="checkbox" id="chkExibirFaixas" checked onchange="alternarFaixasTopoBase(this.checked)">
               <span class="slider"></span>
             </label>
           </div>
-        </div>
 
-        <!-- Legenda da Imagem com Botão de Copiar -->
-        <div class="form-group">
-          <div class="form-group-header">
-            <label for="inputLegenda">Legenda da Postagem</label>
-            <button type="button" class="btn-copy-caption" id="btnCopiarLegenda" onclick="copiarLegenda()">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-              </svg>
-              <span id="txtBtnCopiar">Copiar Legenda</span>
-            </button>
+          <!-- Texto Superior com suporte a quebra de linha (Enter) -->
+          <div class="form-group">
+            <label for="inputTextoTopo">Texto da Faixa Superior (Enter = Nova Linha)</label>
+            <textarea id="inputTextoTopo" class="textarea-topo" rows="2" oninput="atualizarTextoTopo(this.value)">SEU TEXTO PRINCIPAL AQUI</textarea>
           </div>
-          <textarea id="inputLegenda" placeholder="Escreva aqui a legenda que acompanhará a postagem nas redes sociais..."></textarea>
-        </div>
 
-        <!-- Cores das Faixas -->
-        <div class="form-group">
-          <label>Cor das Faixas / Destaque</label>
-          <div class="palette-row">
-            <div class="color-dot" style="background: rgba(15, 23, 42, 0.94);" title="Grafite Escuro" onclick="alterarCorFaixas('rgba(15, 23, 42, 0.94)')"></div>
-            <div class="color-dot" style="background: #ff6b00;" title="Laranja Promoção" onclick="alterarCorFaixas('#ff6b00')"></div>
-            <div class="color-dot" style="background: #2563eb;" title="Azul Royal" onclick="alterarCorFaixas('#2563eb')"></div>
-            <div class="color-dot" style="background: #10b981;" title="Verde Esmeralda" onclick="alterarCorFaixas('#10b981')"></div>
-            <div class="color-dot" style="background: #e11d48;" title="Vermelho Vibrante" onclick="alterarCorFaixas('#e11d48')"></div>
-            <div class="color-dot" style="background: #ec4899;" title="Rosa Choque" onclick="alterarCorFaixas('#ec4899')"></div>
-            <div class="color-dot" style="background: #9333ea;" title="Roxo Profundo" onclick="alterarCorFaixas('#9333ea')"></div>
-            <div class="color-dot" style="background: #84cc16;" title="Verde Limão" onclick="alterarCorFaixas('#84cc16')"></div>
-            <div class="color-dot" style="background: #f59e0b;" title="Âmbar" onclick="alterarCorFaixas('#f59e0b')"></div>
-            <div class="color-dot" style="background: #ffffff;" title="Branco Puro" onclick="alterarCorFaixas('#ffffff')"></div>
+          <!-- WhatsApp / Contato na Faixa Inferior -->
+          <div class="form-group">
+            <label>WhatsApp / Contato (Faixa Inferior)</label>
+            <input type="text" id="inputTelefone" value="(81) 99999-9999" oninput="atualizarTelefone(this.value)">
+            
+            <div class="toggle-row" style="margin-top: 4px;">
+              <span>Exibir ícone do WhatsApp</span>
+              <label class="switch">
+                <input type="checkbox" id="chkIconeWhats" checked onchange="alternarIconeWhatsApp(this.checked)">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Cores Exclusivas das Faixas -->
+          <div class="form-group">
+            <label>Cor de Fundo das Faixas</label>
+            <div class="palette-row">
+              <div class="color-dot" style="background: rgba(15, 23, 42, 0.94);" title="Grafite Escuro" onclick="alterarCorFaixas('rgba(15, 23, 42, 0.94)')"></div>
+              <div class="color-dot" style="background: #ff6b00;" title="Laranja" onclick="alterarCorFaixas('#ff6b00')"></div>
+              <div class="color-dot" style="background: #2563eb;" title="Azul Royal" onclick="alterarCorFaixas('#2563eb')"></div>
+              <div class="color-dot" style="background: #10b981;" title="Verde Esmeralda" onclick="alterarCorFaixas('#10b981')"></div>
+              <div class="color-dot" style="background: #e11d48;" title="Vermelho Vibrante" onclick="alterarCorFaixas('#e11d48')"></div>
+              <div class="color-dot" style="background: #ec4899;" title="Rosa Choque" onclick="alterarCorFaixas('#ec4899')"></div>
+              <div class="color-dot" style="background: #9333ea;" title="Roxo Profundo" onclick="alterarCorFaixas('#9333ea')"></div>
+              <div class="color-dot" style="background: #84cc16;" title="Verde Limão" onclick="alterarCorFaixas('#84cc16')"></div>
+              <div class="color-dot" style="background: #f59e0b;" title="Âmbar" onclick="alterarCorFaixas('#f59e0b')"></div>
+              <div class="color-dot" style="background: #ffffff;" title="Branco Puro" onclick="alterarCorFaixas('#ffffff')"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Cor das Letras das Faixas</label>
+            <div class="palette-row">
+              <div class="color-dot" style="background: #ffffff;" title="Branco" onclick="alterarCorLetras('#ffffff')"></div>
+              <div class="color-dot" style="background: #fde047;" title="Amarelo" onclick="alterarCorLetras('#fde047')"></div>
+              <div class="color-dot" style="background: #34d399;" title="Verde Claro" onclick="alterarCorLetras('#34d399')"></div>
+              <div class="color-dot" style="background: #38bdf8;" title="Ciano" onclick="alterarCorLetras('#38bdf8')"></div>
+              <div class="color-dot" style="background: #f472b6;" title="Rosa Claro" onclick="alterarCorLetras('#f472b6')"></div>
+              <div class="color-dot" style="background: #e9d5ff;" title="Lilás Claro" onclick="alterarCorLetras('#e9d5ff')"></div>
+              <div class="color-dot" style="background: #fed7aa;" title="Pêssego" onclick="alterarCorLetras('#fed7aa')"></div>
+              <div class="color-dot" style="background: #0f172a;" title="Preto Grafite" onclick="alterarCorLetras('#0f172a')"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Cores dos Textos -->
-        <div class="form-group">
-          <label>Cor das Letras</label>
-          <div class="palette-row">
-            <div class="color-dot" style="background: #ffffff;" title="Branco" onclick="alterarCorLetras('#ffffff')"></div>
-            <div class="color-dot" style="background: #fde047;" title="Amarelo" onclick="alterarCorLetras('#fde047')"></div>
-            <div class="color-dot" style="background: #34d399;" title="Verde Claro" onclick="alterarCorLetras('#34d399')"></div>
-            <div class="color-dot" style="background: #38bdf8;" title="Ciano" onclick="alterarCorLetras('#38bdf8')"></div>
-            <div class="color-dot" style="background: #f472b6;" title="Rosa Claro" onclick="alterarCorLetras('#f472b6')"></div>
-            <div class="color-dot" style="background: #e9d5ff;" title="Lilás Claro" onclick="alterarCorLetras('#e9d5ff')"></div>
-            <div class="color-dot" style="background: #fed7aa;" title="Pêssego" onclick="alterarCorLetras('#fed7aa')"></div>
-            <div class="color-dot" style="background: #0f172a;" title="Preto Grafite" onclick="alterarCorLetras('#0f172a')"></div>
+        <!-- ===============================================================
+             BLOCO 3: LEGENDA DA POSTAGEM (PARA COPIAR NAS REDES SOCIAIS)
+             =============================================================== -->
+        <div class="control-section-card">
+          <div class="form-group">
+            <div class="form-group-header">
+              <label for="inputLegenda">Legenda para Redes Sociais</label>
+              <button type="button" class="btn-copy-caption" id="btnCopiarLegenda" onclick="copiarLegenda()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                <span id="txtBtnCopiar">Copiar Legenda</span>
+              </button>
+            </div>
+            <textarea id="inputLegenda" class="textarea-legenda" placeholder="Escreva aqui a legenda que acompanhará a postagem nas redes sociais..."></textarea>
           </div>
         </div>
 
         <div class="sidebar-actions">
-          <button class="btn btn-share" onclick="compartilharOuBaixar()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-            Compartilhar no Celular
-          </button>
-          <button class="btn btn-primary" onclick="baixarImagemFinal()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar Imagem Final
-          </button>
+          <div id="acoesImagem">
+            <button class="btn btn-share" style="margin-bottom: 8px;" onclick="compartilharOuBaixar()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              Compartilhar no Celular
+            </button>
+            <button class="btn btn-primary" onclick="baixarImagemFinal()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar Imagem Final
+            </button>
+            <button class="btn btn-purple" id="btnBaixarTodasCarrossel" style="display: none; margin-top: 8px;" onclick="baixarTodasLaminasCarrossel()">
+              📑 Baixar Todas do Carrossel
+            </button>
+          </div>
+
+          <div id="acoesVideo" style="display: none;">
+            <button class="btn btn-purple" id="btnExportarVideo" onclick="exportarVideoComFaixas()">
+              🎬 Baixar Vídeo com Faixas
+            </button>
+          </div>
+
           <button class="btn btn-subtle" onclick="fecharEditor()">Voltar ao Calendário</button>
         </div>
       </div>
@@ -1086,19 +1242,29 @@
     let canvas;
     let nomeArquivoAtual = 'arte-editada.png';
     let dataChaveAtual = '';
-    let tipoMidiaAtual = 'imagem'; // 'imagem', 'carrossel', 'video' ou 'promocao'
+    let tipoMidiaAtual = 'imagem';
     let listaArquivosCarrossel = [];
     let indiceCarrosselAtual = 0;
 
     let imagemCarregadaObj = null;
-    let faixaTopoObj, faixaBaseObj, textoTopoObj;
-    let grupoWhatsAppObj, textoTelefoneObj, iconeWhatsObj;
+    let faixaTopoObj = null;
+    let faixaBaseObj = null;
+    let textoTopoObj = null;
+    let grupoWhatsAppObj = null;
+    let textoTelefoneObj = null;
+    let iconeWhatsObj = null;
+
+    // Objetos independentes da Promoção
     let grupoPromocaoObj = null;
+    let grupoCtaPromoObj = null;
+    let seloSazonalObj = null;
+    let seloSazonalChaveAtual = null;
 
     let formatoAtual = 'feed';
     let corFaixaAtual = 'rgba(15, 23, 42, 0.94)';
     let corLetraAtual = '#ffffff';
     let corDestaquePromo = '#ff6b00';
+    let corValorPromo = '#ffffff';
 
     const svgWhatsApp = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -1106,8 +1272,105 @@
       </svg>`;
 
     // =========================================================================
-    // CONFIGURAÇÃO DAS ARTES DE PROMOÇÕES (arquivos promo-1.jpg, promo-2.jpg...)
+    // SELOS VETORIAIS SAZONAIS PARA PROMOÇÕES (PRINCIPAIS EVENTOS DO MERCADO)
     // =========================================================================
+    const selosSazonaisSVG = {
+      blackfriday: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="150" viewBox="0 0 380 150">
+          <defs>
+            <linearGradient id="bfGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#111827"/>
+              <stop offset="100%" stop-color="#000000"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="10" width="364" height="126" rx="22" fill="url(#bfGrad)" stroke="#ff6b00" stroke-width="5"/>
+          <rect x="115" y="2" width="150" height="24" rx="12" fill="#ff6b00"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">OFERTA OFICIAL</text>
+          <text x="190" y="72" font-family="Arial, sans-serif" font-weight="900" font-size="48" fill="#ffffff" text-anchor="middle" letter-spacing="-1">BLACK</text>
+          <text x="190" y="120" font-family="Arial, sans-serif" font-weight="900" font-size="48" fill="#ff6b00" text-anchor="middle" letter-spacing="2">FRIDAY</text>
+        </svg>`,
+      natal: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <defs>
+            <linearGradient id="natalGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#dc2626"/>
+              <stop offset="100%" stop-color="#991b1b"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="12" width="364" height="120" rx="24" fill="url(#natalGrad)" stroke="#fde047" stroke-width="5"/>
+          <rect x="95" y="2" width="190" height="26" rx="13" fill="#15803d" stroke="#fde047" stroke-width="2"/>
+          <text x="190" y="19" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">ESPECIAL DE FIM DE ANO</text>
+          <text x="190" y="76" font-family="Arial, sans-serif" font-weight="900" font-size="44" fill="#fde047" text-anchor="middle">NATAL PREMIADO</text>
+          <text x="190" y="114" font-family="Arial, sans-serif" font-weight="800" font-size="22" fill="#ffffff" text-anchor="middle" letter-spacing="2">PRESENTEIE COM CNH</text>
+        </svg>`,
+      maes: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <defs>
+            <linearGradient id="maesGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#db2777"/>
+              <stop offset="100%" stop-color="#9d174d"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="12" width="364" height="120" rx="28" fill="url(#maesGrad)" stroke="#fbcfe8" stroke-width="5"/>
+          <rect x="105" y="2" width="170" height="24" rx="12" fill="#ffffff"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#be185d" text-anchor="middle" letter-spacing="1.5">PROMOÇÃO ESPECIAL</text>
+          <text x="190" y="74" font-family="Arial, sans-serif" font-weight="900" font-size="42" fill="#ffffff" text-anchor="middle">DIA DAS MÃES</text>
+          <text x="190" y="112" font-family="Arial, sans-serif" font-weight="800" font-size="20" fill="#fce7f3" text-anchor="middle" letter-spacing="1.5">ELA MERECE ESSA LIBERDADE</text>
+        </svg>`,
+      pais: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <defs>
+            <linearGradient id="paisGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1d4ed8"/>
+              <stop offset="100%" stop-color="#1e3a8a"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="12" width="364" height="120" rx="22" fill="url(#paisGrad)" stroke="#38bdf8" stroke-width="5"/>
+          <rect x="105" y="2" width="170" height="24" rx="12" fill="#38bdf8"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#0f172a" text-anchor="middle" letter-spacing="1.5">OFERTA ESPECIAL</text>
+          <text x="190" y="75" font-family="Arial, sans-serif" font-weight="900" font-size="42" fill="#ffffff" text-anchor="middle">DIA DOS PAIS</text>
+          <text x="190" y="113" font-family="Arial, sans-serif" font-weight="800" font-size="20" fill="#bae6fd" text-anchor="middle" letter-spacing="1.5">CONDIÇÃO IMPERDÍVEL</text>
+        </svg>`,
+      maioamarelo: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <defs>
+            <linearGradient id="maioGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#facc15"/>
+              <stop offset="100%" stop-color="#eab308"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="12" width="364" height="120" rx="22" fill="url(#maioGrad)" stroke="#0f172a" stroke-width="5"/>
+          <rect x="95" y="2" width="190" height="24" rx="12" fill="#0f172a"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#facc15" text-anchor="middle" letter-spacing="1.5">TRÂNSITO SEGURO</text>
+          <text x="190" y="75" font-family="Arial, sans-serif" font-weight="900" font-size="40" fill="#0f172a" text-anchor="middle">MAIO AMARELO</text>
+          <text x="190" y="112" font-family="Arial, sans-serif" font-weight="800" font-size="20" fill="#1e293b" text-anchor="middle" letter-spacing="1">INCENTIVO À HABILITAÇÃO</text>
+        </svg>`,
+      consumidor: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <rect x="8" y="12" width="364" height="120" rx="22" fill="#059669" stroke="#a7f3d0" stroke-width="5"/>
+          <rect x="95" y="2" width="190" height="24" rx="12" fill="#fde047"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#064e3b" text-anchor="middle" letter-spacing="1.5">OPORTUNIDADE ÚNICA</text>
+          <text x="190" y="72" font-family="Arial, sans-serif" font-weight="900" font-size="36" fill="#ffffff" text-anchor="middle">MÊS DO CONSUMIDOR</text>
+          <text x="190" y="110" font-family="Arial, sans-serif" font-weight="800" font-size="21" fill="#fde047" text-anchor="middle" letter-spacing="1.5">DESCONTO EXCLUSIVO</text>
+        </svg>`,
+      ferias: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <rect x="8" y="12" width="364" height="120" rx="24" fill="#0284c7" stroke="#fde047" stroke-width="5"/>
+          <rect x="105" y="2" width="170" height="24" rx="12" fill="#ff6b00"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">APROVEITE O TEMPO LIVRE</text>
+          <text x="190" y="75" font-family="Arial, sans-serif" font-weight="900" font-size="42" fill="#fde047" text-anchor="middle">FÉRIAS NA DIREÇÃO</text>
+          <text x="190" y="112" font-family="Arial, sans-serif" font-weight="800" font-size="20" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">TIRE SUA CNH AGORA</text>
+        </svg>`,
+      anonovo: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="380" height="145" viewBox="0 0 380 145">
+          <rect x="8" y="12" width="364" height="120" rx="22" fill="#0f172a" stroke="#facc15" stroke-width="5"/>
+          <rect x="105" y="2" width="170" height="24" rx="12" fill="#facc15"/>
+          <text x="190" y="18" font-family="Arial, sans-serif" font-weight="900" font-size="12" fill="#0f172a" text-anchor="middle" letter-spacing="1.5">META REALIZADA</text>
+          <text x="190" y="75" font-family="Arial, sans-serif" font-weight="900" font-size="40" fill="#ffffff" text-anchor="middle">ANO NOVO, CNH NOVA</text>
+          <text x="190" y="113" font-family="Arial, sans-serif" font-weight="800" font-size="20" fill="#facc15" text-anchor="middle" letter-spacing="1.5">COMECE O ANO HABILITADO</text>
+        </svg>`
+    };
+
     const artesPromocoes = [
       {
         arquivoBase: "promo-1",
@@ -1206,7 +1469,10 @@
     let dataAtualVisualizada = new Date();
 
     window.onload = function() {
-      canvas = new fabric.Canvas('canvasFabric', { selection: true });
+      canvas = new fabric.Canvas('canvasFabric', {
+        selection: true,
+        preserveObjectStacking: true
+      });
       atualizarGradeDoMes();
       carregarGradePromocoes();
 
@@ -1363,9 +1629,6 @@
       }
     }
 
-    // =========================================================================
-    // CARREGAMENTO DA GRADE DE PROMOÇÕES ABAIXO DO CALENDÁRIO
-    // =========================================================================
     async function carregarGradePromocoes() {
       const gradePromo = document.getElementById('gradePromocoes');
       gradePromo.innerHTML = '';
@@ -1418,16 +1681,21 @@
       }
     }
 
-    // Abre uma arte de Promoção no Editor com o bloco central de valores editável
     function abrirPromocaoNoEditor(urlImagem, promoData) {
       tipoMidiaAtual = 'promocao';
       dataChaveAtual = promoData.arquivoBase;
       listaArquivosCarrossel = [urlImagem];
       indiceCarrosselAtual = 0;
+      grupoPromocaoObj = null;
+      grupoCtaPromoObj = null;
+      seloSazonalObj = null;
+      seloSazonalChaveAtual = null;
+
+      document.querySelectorAll('.btn-selo-sazonal').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnRemoverSelo').style.display = 'none';
 
       const telefoneAtual = document.getElementById('inputTelefone').value;
 
-      // Preenche os campos do bloco promocional
       document.getElementById('promoChamada').value = promoData.chamada;
       document.getElementById('promoDePor').value = promoData.dePor;
       document.getElementById('promoValor').value = promoData.valor;
@@ -1437,7 +1705,6 @@
       document.getElementById('promoSelo2').value = promoData.selo2;
       document.getElementById('promoCta').value = promoData.cta;
 
-      // Atualiza botões de modalidade
       document.getElementById('btnModCarro').classList.toggle('active', promoData.modalidade.includes('SÓ CARRO'));
       document.getElementById('btnModMoto').classList.toggle('active', promoData.modalidade.includes('SÓ MOTO'));
       document.getElementById('btnModAmbos').classList.toggle('active', promoData.modalidade.includes('CARRO OU'));
@@ -1445,11 +1712,10 @@
       document.getElementById('inputTextoTopo').value = promoData.titulo.toUpperCase();
       document.getElementById('inputLegenda').value = `${promoData.legenda}\n\n📲 WhatsApp: ${telefoneAtual}`;
 
-      // Ajusta visibilidade dos painéis da sidebar
       document.getElementById('tituloSidebarEditor').innerText = 'Editar Promoção';
       document.getElementById('boxControlesPromo').style.display = 'flex';
       document.getElementById('rowToggleFaixas').style.display = 'flex';
-      document.getElementById('chkExibirFaixas').checked = false; // Por padrão oculta as faixas na promoção para não cobrir o título da arte (mas pode ativar se quiser)
+      document.getElementById('chkExibirFaixas').checked = false;
 
       document.getElementById('boxCarrosselNav').style.display = 'none';
       document.getElementById('boxEventoDestaque').style.display = 'none';
@@ -1468,8 +1734,11 @@
       dataChaveAtual = dataChave;
       listaArquivosCarrossel = midia.arquivos;
       indiceCarrosselAtual = 0;
+      grupoPromocaoObj = null;
+      grupoCtaPromoObj = null;
+      seloSazonalObj = null;
+      seloSazonalChaveAtual = null;
 
-      // Esconde painel exclusivo de promoções
       document.getElementById('boxControlesPromo').style.display = 'none';
       document.getElementById('rowToggleFaixas').style.display = 'none';
       document.getElementById('chkExibirFaixas').checked = true;
@@ -1528,7 +1797,7 @@
     function selecionarModalidade(textoMod, botao) {
       document.querySelectorAll('.btn-mod').forEach(b => b.classList.remove('active'));
       if (botao) botao.classList.add('active');
-      document.getElementById('promoModalidade').value = textoMod.replace('\n', ' ');
+      document.getElementById('promoModalidade').value = textoMod;
       atualizarBlocoPromocao();
     }
 
@@ -1552,11 +1821,17 @@
           `Lâmina ${indiceCarrosselAtual + 1} de ${listaArquivosCarrossel.length}`;
       }
 
-      fabric.Image.fromURL(urlLamina, function(img) {
-        if (!img || !img.width) return;
-        imagemCarregadaObj = img;
-        setTimeout(ajustarCanvasNaTela, 50);
-      });
+      const imgNativa = new Image();
+      imgNativa.onload = function() {
+        imagemCarregadaObj = new fabric.Image(imgNativa, {
+          selectable: false,
+          evented: false
+        });
+        requestAnimationFrame(() => {
+          ajustarCanvasNaTela();
+        });
+      };
+      imgNativa.src = urlLamina;
     }
 
     function ajustarPalcoVideo() {
@@ -1585,16 +1860,20 @@
       box.style.width = `${boxW}px`;
       box.style.height = `${boxH}px`;
 
-      const alturaFaixa = Math.max(boxH * 0.11, 44);
-      faixaTopo.style.height = `${alturaFaixa}px`;
-      faixaBase.style.height = `${alturaFaixa}px`;
+      const textoTopoVal = document.getElementById('inputTextoTopo').value;
+      const qtdLinhas = textoTopoVal.split('\n').length;
+      const alturaBaseFaixa = Math.max(boxH * 0.11, 44);
+      const alturaFaixaTopo = alturaBaseFaixa + Math.max(0, qtdLinhas - 1) * (alturaBaseFaixa * 0.45);
+
+      faixaTopo.style.height = `${alturaFaixaTopo}px`;
+      faixaBase.style.height = `${alturaBaseFaixa}px`;
 
       faixaTopo.style.background = corFaixaAtual;
       faixaBase.style.background = corFaixaAtual;
       faixaTopo.style.color = corLetraAtual;
       faixaBase.style.color = corLetraAtual;
 
-      faixaTopo.innerText = document.getElementById('inputTextoTopo').value;
+      faixaTopo.innerText = textoTopoVal;
       document.getElementById('videoTextoTelefone').innerText = document.getElementById('inputTelefone').value;
       document.getElementById('videoIconeWhats').style.display =
         document.getElementById('chkIconeWhats').checked ? 'inline-flex' : 'none';
@@ -1629,16 +1908,39 @@
       }
     }
 
+    function calcularMetricasFaixas(canvasW, canvasH) {
+      const exibirFaixas = (tipoMidiaAtual !== 'promocao') || document.getElementById('chkExibirFaixas').checked;
+      if (!exibirFaixas) {
+        return { exibirFaixas: false, alturaBase: 0, alturaTopo: 0, tamanhoFonteTopo: 16 };
+      }
+
+      const alturaBase = (formatoAtual === 'shorts')
+        ? Math.max(canvasH * 0.095, 42)
+        : Math.max(canvasH * 0.12, 46);
+
+      const tamanhoFonteTopo = (formatoAtual === 'shorts')
+        ? Math.max(canvasW * 0.046, 13)
+        : Math.max(alturaBase * 0.36, 14);
+
+      const textoTopoValor = document.getElementById('inputTextoTopo').value || ' ';
+      const qtdLinhas = textoTopoValor.split('\n').length;
+      const alturaLinha = tamanhoFonteTopo * 1.22;
+      const alturaTopo = Math.max(alturaBase, (qtdLinhas * alturaLinha) + 18);
+
+      return { exibirFaixas: true, alturaBase, alturaTopo, tamanhoFonteTopo };
+    }
+
     function ajustarCanvasNaTela() {
-      if (!imagemCarregadaObj) return;
+      if (!imagemCarregadaObj || !canvas) return;
 
       const stage = document.getElementById('stageContainer');
       const stageW = Math.max(stage.clientWidth - 28, 220);
       const stageH = Math.max(stage.clientHeight - 28, 220);
 
-      const aspect = (formatoAtual === 'shorts')
-        ? (9 / 16)
-        : (imagemCarregadaObj.width / imagemCarregadaObj.height);
+      const origW = imagemCarregadaObj.width || 1080;
+      const origH = imagemCarregadaObj.height || 1080;
+
+      const aspect = (formatoAtual === 'shorts') ? (9 / 16) : (origW / origH);
 
       let canvasW, canvasH;
       if (stageW / stageH > aspect) {
@@ -1652,66 +1954,49 @@
       canvas.setWidth(canvasW);
       canvas.setHeight(canvasH);
       canvas.clear();
-      canvas.setBackgroundColor('#0f172a', canvas.renderAll.bind(canvas));
+      canvas.setBackgroundColor('#0f172a', () => {});
 
-      const exibirFaixas = (tipoMidiaAtual !== 'promocao') || document.getElementById('chkExibirFaixas').checked;
-
-      const alturaFaixa = exibirFaixas
-        ? ((formatoAtual === 'shorts') ? Math.max(canvasH * 0.10, 44) : Math.max(canvasH * 0.125, 48))
-        : 0;
-
-      const espacoUtilH = exibirFaixas ? (canvasH - (alturaFaixa * 2) - 8) : canvasH;
-      const offsetTopo = exibirFaixas ? (alturaFaixa + 4) : 0;
+      const metricas = calcularMetricasFaixas(canvasW, canvasH);
+      const espacoUtilH = metricas.exibirFaixas
+        ? (canvasH - metricas.alturaTopo - metricas.alturaBase - 8)
+        : canvasH;
+      const offsetTopo = metricas.exibirFaixas ? (metricas.alturaTopo + 4) : 0;
 
       if (formatoAtual === 'shorts') {
-        imagemCarregadaObj.clone(function(bgImg) {
-          const escalaBg = Math.max(canvasW / bgImg.width, canvasH / bgImg.height) * 1.08;
-          bgImg.set({
-            scaleX: escalaBg,
-            scaleY: escalaBg,
-            left: canvasW / 2,
-            top: canvasH / 2,
-            originX: 'center',
-            originY: 'center',
-            opacity: 0.45,
-            selectable: false,
-            evented: false
-          });
-          bgImg.filters.push(new fabric.Image.filters.Blur({ blur: 0.35 }));
-          bgImg.applyFilters();
-
-          canvas.add(bgImg);
-          canvas.sendToBack(bgImg);
-          canvas.renderAll();
+        const bgImg = new fabric.Image(imagemCarregadaObj.getElement(), {
+          left: canvasW / 2,
+          top: canvasH / 2,
+          originX: 'center',
+          originY: 'center',
+          opacity: 0.25,
+          selectable: false,
+          evented: false
         });
+        const escalaBg = Math.max(canvasW / origW, canvasH / origH) * 1.15;
+        bgImg.set({ scaleX: escalaBg, scaleY: escalaBg });
+        canvas.add(bgImg);
 
-        const escalaPrincipal = Math.min(
-          canvasW / imagemCarregadaObj.width,
-          espacoUtilH / imagemCarregadaObj.height
-        );
-
-        const imgW = imagemCarregadaObj.width * escalaPrincipal;
-        const imgH = imagemCarregadaObj.height * escalaPrincipal;
+        const escalaPrincipal = Math.min(canvasW / origW, espacoUtilH / origH);
+        const imgW = origW * escalaPrincipal;
+        const imgH = origH * escalaPrincipal;
 
         imagemCarregadaObj.set({
           scaleX: escalaPrincipal,
           scaleY: escalaPrincipal,
           left: (canvasW - imgW) / 2,
           top: offsetTopo + (espacoUtilH - imgH) / 2,
-          shadow: 'rgba(0,0,0,0.45) 0 10px 25px',
           selectable: false,
           evented: false
         });
       } else {
-        const escalaH = espacoUtilH / imagemCarregadaObj.height;
-        const escalaW = canvasW / imagemCarregadaObj.width;
+        const escalaH = espacoUtilH / origH;
+        const escalaW = canvasW / origW;
 
         imagemCarregadaObj.set({
           scaleX: escalaW,
           scaleY: escalaH,
           left: 0,
           top: offsetTopo,
-          shadow: null,
           selectable: false,
           evented: false
         });
@@ -1719,8 +2004,8 @@
 
       canvas.add(imagemCarregadaObj);
 
-      if (exibirFaixas) {
-        construirEstruturaPadrao(alturaFaixa);
+      if (metricas.exibirFaixas) {
+        construirEstruturaPadrao(metricas);
       } else {
         faixaTopoObj = null;
         faixaBaseObj = null;
@@ -1728,18 +2013,101 @@
         grupoWhatsAppObj = null;
       }
 
-      // Se for uma arte de promoção, constrói o bloco central editável
       if (tipoMidiaAtual === 'promocao') {
         construirBlocoPromocao();
+        construirBotaoCtaSeparado();
+        if (seloSazonalChaveAtual) {
+          aplicarSeloSazonal(seloSazonalChaveAtual, null, true);
+        }
       }
+
+      canvas.renderAll();
     }
 
     // =========================================================================
-    // CONSTRUÇÃO DO BLOCO PROMOCIONAL CENTRAL (IGUAL À IMAGEM DE REFERÊNCIA)
+    // SELO SAZONAL POR CIMA DA IMAGEM (BLACK FRIDAY, NATAL, MÃES, PAIS, ETC.)
+    // =========================================================================
+    function aplicarSeloSazonal(chave, botaoEl, manterPosicao = false) {
+      if (tipoMidiaAtual !== 'promocao' || !selosSazonaisSVG[chave]) return;
+
+      let posLeft = canvas.width * 0.5;
+      let posTop = canvas.height * 0.16;
+      let scalePrevX = null;
+      let scalePrevY = null;
+      let anglePrev = 0;
+
+      if (seloSazonalObj) {
+        if (manterPosicao) {
+          posLeft = seloSazonalObj.left;
+          posTop = seloSazonalObj.top;
+          scalePrevX = seloSazonalObj.scaleX;
+          scalePrevY = seloSazonalObj.scaleY;
+          anglePrev = seloSazonalObj.angle;
+        }
+        canvas.remove(seloSazonalObj);
+        seloSazonalObj = null;
+      }
+
+      seloSazonalChaveAtual = chave;
+
+      if (botaoEl) {
+        document.querySelectorAll('.btn-selo-sazonal').forEach(b => b.classList.remove('active'));
+        botaoEl.classList.add('active');
+      }
+      document.getElementById('btnRemoverSelo').style.display = 'block';
+
+      fabric.loadSVGFromString(selosSazonaisSVG[chave], function(objects, options) {
+        seloSazonalObj = fabric.util.groupSVGElements(objects, options);
+
+        if (scalePrevX && scalePrevY) {
+          seloSazonalObj.set({
+            scaleX: scalePrevX,
+            scaleY: scalePrevY,
+            angle: anglePrev
+          });
+        } else {
+          const larguraDesejada = canvas.width * 0.68;
+          seloSazonalObj.scaleToWidth(larguraDesejada);
+        }
+
+        seloSazonalObj.set({
+          originX: 'center',
+          originY: 'center',
+          left: posLeft,
+          top: posTop,
+          cornerColor: '#ff6b00',
+          cornerStrokeColor: '#ffffff',
+          borderColor: '#ff6b00',
+          cornerSize: 10,
+          transparentCorners: false,
+          shadow: new fabric.Shadow({ color: 'rgba(0,0,0,0.45)', blur: 12, offsetX: 0, offsetY: 5 })
+        });
+
+        canvas.add(seloSazonalObj);
+        canvas.setActiveObject(seloSazonalObj);
+        canvas.renderAll();
+      });
+    }
+
+    function removerSeloSazonal() {
+      if (seloSazonalObj) {
+        canvas.remove(seloSazonalObj);
+        seloSazonalObj = null;
+      }
+      seloSazonalChaveAtual = null;
+      document.querySelectorAll('.btn-selo-sazonal').forEach(b => b.classList.remove('active'));
+      document.getElementById('btnRemoverSelo').style.display = 'none';
+      canvas.renderAll();
+    }
+
+    // =========================================================================
+    // BLOCO CENTRAL DA PROMOÇÃO (VALORES E SELOS)
     // =========================================================================
     function construirBlocoPromocao() {
+      if (!canvas || !canvas.width) return;
+
       let posLeft = canvas.width * 0.5;
-      let posTop = canvas.height * 0.72;
+      let posTop = canvas.height * 0.67;
       let scalePrevX = 1;
       let scalePrevY = 1;
 
@@ -1749,6 +2117,7 @@
         scalePrevX = grupoPromocaoObj.scaleX;
         scalePrevY = grupoPromocaoObj.scaleY;
         canvas.remove(grupoPromocaoObj);
+        grupoPromocaoObj = null;
       }
 
       const chamada = document.getElementById('promoChamada').value;
@@ -1758,61 +2127,62 @@
       const modalidadeRaw = document.getElementById('promoModalidade').value;
       const selo1 = document.getElementById('promoSelo1').value;
       const selo2 = document.getElementById('promoSelo2').value;
-      const cta = document.getElementById('promoCta').value;
 
-      // Quebra modalidade em 2 linhas se for "CARRO OU MOTO (A/B)" para manter o visual compacto ao lado do preço
       let modalidadeFormatada = modalidadeRaw;
-      if (modalidadeRaw.toUpperCase() === 'CARRO OU MOTO (A/B)') {
+      if (modalidadeRaw.trim().toUpperCase() === 'CARRO OU MOTO (A/B)') {
         modalidadeFormatada = 'CARRO OU\nMOTO (A/B)';
+      } else if (modalidadeRaw.trim().toUpperCase() === 'SÓ CARRO (CAT. B)') {
+        modalidadeFormatada = 'SÓ CARRO\n(CAT. B)';
+      } else if (modalidadeRaw.trim().toUpperCase() === 'SÓ MOTO (CAT. A)') {
+        modalidadeFormatada = 'SÓ MOTO\n(CAT. A)';
       }
 
-      const baseW = Math.min(canvas.width * 0.88, 340);
+      const baseW = Math.min(canvas.width * 0.90, 340);
       const elementos = [];
 
       // 1. Chamada superior ("2 aulas por")
-      const txtChamada = new fabric.Text(chamada, {
-        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-        fontWeight: '800',
-        fontSize: baseW * 0.088,
-        fill: '#ffffff',
-        left: -baseW * 0.44,
-        top: -baseW * 0.46,
-        shadow: 'rgba(0,0,0,0.75) 0 2px 6px'
-      });
-      elementos.push(txtChamada);
+      if (chamada.trim() !== '') {
+        elementos.push(new fabric.Text(chamada, {
+          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+          fontWeight: '800',
+          fontSize: baseW * 0.088,
+          fill: corValorPromo,
+          left: -baseW * 0.45,
+          top: -baseW * 0.36,
+          shadow: new fabric.Shadow({ color: 'rgba(0,0,0,0.8)', blur: 6, offsetX: 0, offsetY: 2 })
+        }));
+      }
 
       // 2. Pílula branca "De R$350,00 por"
       if (dePor.trim() !== '') {
-        const pillDePorW = baseW * 0.44;
+        const pillDePorW = baseW * 0.45;
         const pillDePorH = baseW * 0.085;
         const rectDePor = new fabric.Rect({
           width: pillDePorW,
           height: pillDePorH,
           rx: pillDePorH / 2,
           ry: pillDePorH / 2,
-          fill: 'rgba(255, 255, 255, 0.94)',
-          left: baseW * 0.04,
-          top: -baseW * 0.445,
-          shadow: 'rgba(0,0,0,0.3) 0 2px 6px'
+          fill: 'rgba(255, 255, 255, 0.95)',
+          left: baseW * 0.03,
+          top: -baseW * 0.345
         });
 
         const txtDePor = new fabric.Text(dePor, {
           fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
           fontWeight: '700',
-          fontSize: pillDePorH * 0.50,
+          fontSize: pillDePorH * 0.48,
           fill: corDestaquePromo,
           originX: 'center',
           originY: 'center',
-          left: baseW * 0.04 + pillDePorW / 2,
-          top: -baseW * 0.445 + pillDePorH / 2
+          left: baseW * 0.03 + pillDePorW / 2,
+          top: -baseW * 0.345 + pillDePorH / 2
         });
 
-        // Linha de riscado sobre o valor antigo
         const linhaRisco = new fabric.Line([
-          baseW * 0.04 + pillDePorW * 0.18,
-          -baseW * 0.445 + pillDePorH / 2,
-          baseW * 0.04 + pillDePorW * 0.76,
-          -baseW * 0.445 + pillDePorH / 2
+          baseW * 0.03 + pillDePorW * 0.16,
+          -baseW * 0.345 + pillDePorH / 2,
+          baseW * 0.03 + pillDePorW * 0.78,
+          -baseW * 0.345 + pillDePorH / 2
         ], {
           stroke: '#0f172a',
           strokeWidth: 1.5
@@ -1822,127 +2192,109 @@
       }
 
       // 3. Valor Gigante ("249")
-      const txtValor = new fabric.Text(valor, {
-        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-        fontWeight: '900',
-        fontSize: baseW * 0.34,
-        fill: '#ffffff',
-        left: -baseW * 0.46,
-        top: -baseW * 0.38,
-        charSpacing: -30,
-        shadow: 'rgba(0,0,0,0.65) 0 4px 12px'
-      });
-      elementos.push(txtValor);
+      if (valor.trim() !== '') {
+        elementos.push(new fabric.Text(valor, {
+          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+          fontWeight: '900',
+          fontSize: baseW * 0.34,
+          fill: corValorPromo,
+          left: -baseW * 0.46,
+          top: -baseW * 0.28,
+          charSpacing: -30,
+          shadow: new fabric.Shadow({ color: 'rgba(0,0,0,0.75)', blur: 10, offsetX: 0, offsetY: 4 })
+        }));
+      }
 
       // 4. Centavos elevados (",99")
-      const txtCentavos = new fabric.Text(centavos, {
-        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-        fontWeight: '900',
-        fontSize: baseW * 0.145,
-        fill: '#ffffff',
-        left: baseW * 0.15,
-        top: -baseW * 0.34,
-        shadow: 'rgba(0,0,0,0.65) 0 3px 8px'
-      });
-      elementos.push(txtCentavos);
-
-      // 5. Modalidade em laranja ("CARRO OU MOTO (A/B)")
-      const txtModalidade = new fabric.Text(modalidadeFormatada.toUpperCase(), {
-        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-        fontWeight: '900',
-        fontSize: baseW * 0.062,
-        lineHeight: 1.05,
-        fill: corDestaquePromo,
-        left: baseW * 0.155,
-        top: -baseW * 0.175,
-        shadow: 'rgba(0,0,0,0.85) 0 2px 5px'
-      });
-      elementos.push(txtModalidade);
-
-      // 6. Selo 1 ("Instrutor credenciado pelo Detran")
-      if (selo1.trim() !== '') {
-        const s1W = baseW * 0.72;
-        const s1H = baseW * 0.072;
-        const rectS1 = new fabric.Rect({
-          width: s1W,
-          height: s1H,
-          rx: s1H / 2,
-          ry: s1H / 2,
-          fill: 'rgba(15, 23, 42, 0.55)',
-          stroke: 'rgba(255,255,255,0.75)',
-          strokeWidth: 1,
-          originX: 'center',
-          left: 0,
-          top: -baseW * 0.01
-        });
-        const txtS1 = new fabric.Text(selo1, {
+      if (centavos.trim() !== '') {
+        elementos.push(new fabric.Text(centavos, {
           fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-          fontWeight: '600',
-          fontSize: s1H * 0.52,
-          fill: '#ffffff',
-          originX: 'center',
-          originY: 'center',
-          left: 0,
-          top: -baseW * 0.01 + s1H / 2
-        });
-        elementos.push(rectS1, txtS1);
+          fontWeight: '900',
+          fontSize: baseW * 0.145,
+          fill: corValorPromo,
+          left: baseW * 0.15,
+          top: -baseW * 0.24,
+          shadow: new fabric.Shadow({ color: 'rgba(0,0,0,0.75)', blur: 8, offsetX: 0, offsetY: 3 })
+        }));
       }
 
-      // 7. Selo 2 ("Busca e leva de volta em Francisco Morato")
-      if (selo2.trim() !== '') {
-        const s2W = baseW * 0.88;
-        const s2H = baseW * 0.072;
-        const rectS2 = new fabric.Rect({
-          width: s2W,
-          height: s2H,
-          rx: s2H / 2,
-          ry: s2H / 2,
-          fill: 'rgba(15, 23, 42, 0.55)',
-          stroke: 'rgba(255,255,255,0.75)',
-          strokeWidth: 1,
-          originX: 'center',
-          left: 0,
-          top: baseW * 0.075
-        });
-        const txtS2 = new fabric.Text(selo2, {
+      // 5. Modalidade em destaque ("CARRO OU MOTO (A/B)")
+      if (modalidadeFormatada.trim() !== '') {
+        elementos.push(new fabric.Text(modalidadeFormatada.toUpperCase(), {
           fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-          fontWeight: '600',
-          fontSize: s2H * 0.50,
-          fill: '#ffffff',
-          originX: 'center',
-          originY: 'center',
-          left: 0,
-          top: baseW * 0.075 + s2H / 2
-        });
-        elementos.push(rectS2, txtS2);
-      }
-
-      // 8. Botão CTA arredondado ("Garantir minha vaga")
-      if (cta.trim() !== '') {
-        const ctaW = baseW * 0.92;
-        const ctaH = baseW * 0.145;
-        const rectCta = new fabric.Rect({
-          width: ctaW,
-          height: ctaH,
-          rx: ctaH / 2,
-          ry: ctaH / 2,
+          fontWeight: '900',
+          fontSize: baseW * 0.062,
+          lineHeight: 1.05,
           fill: corDestaquePromo,
-          originX: 'center',
-          left: 0,
-          top: baseW * 0.175,
-          shadow: 'rgba(0,0,0,0.35) 0 4px 12px'
-        });
-        const txtCta = new fabric.Text(cta, {
-          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
-          fontWeight: '800',
-          fontSize: ctaH * 0.48,
-          fill: '#ffffff',
-          originX: 'center',
-          originY: 'center',
-          left: 0,
-          top: baseW * 0.175 + ctaH / 2
-        });
-        elementos.push(rectCta, txtCta);
+          left: baseW * 0.155,
+          top: -baseW * 0.075,
+          shadow: new fabric.Shadow({ color: 'rgba(0,0,0,0.9)', blur: 5, offsetX: 0, offsetY: 2 })
+        }));
+      }
+
+      // 6. Selo 1
+      if (selo1.trim() !== '') {
+        const s1W = baseW * 0.76;
+        const s1H = baseW * 0.072;
+        elementos.push(
+          new fabric.Rect({
+            width: s1W,
+            height: s1H,
+            rx: s1H / 2,
+            ry: s1H / 2,
+            fill: 'rgba(15, 23, 42, 0.62)',
+            stroke: 'rgba(255,255,255,0.8)',
+            strokeWidth: 1,
+            originX: 'center',
+            left: 0,
+            top: baseW * 0.09
+          }),
+          new fabric.Text(selo1, {
+            fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+            fontWeight: '600',
+            fontSize: s1H * 0.50,
+            fill: '#ffffff',
+            originX: 'center',
+            originY: 'center',
+            left: 0,
+            top: baseW * 0.09 + s1H / 2
+          })
+        );
+      }
+
+      // 7. Selo 2
+      if (selo2.trim() !== '') {
+        const s2W = baseW * 0.90;
+        const s2H = baseW * 0.072;
+        elementos.push(
+          new fabric.Rect({
+            width: s2W,
+            height: s2H,
+            rx: s2H / 2,
+            ry: s2H / 2,
+            fill: 'rgba(15, 23, 42, 0.62)',
+            stroke: 'rgba(255,255,255,0.8)',
+            strokeWidth: 1,
+            originX: 'center',
+            left: 0,
+            top: baseW * 0.175
+          }),
+          new fabric.Text(selo2, {
+            fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+            fontWeight: '600',
+            fontSize: s2H * 0.48,
+            fill: '#ffffff',
+            originX: 'center',
+            originY: 'center',
+            left: 0,
+            top: baseW * 0.175 + s2H / 2
+          })
+        );
+      }
+
+      if (elementos.length === 0) {
+        canvas.renderAll();
+        return;
       }
 
       grupoPromocaoObj = new fabric.Group(elementos, {
@@ -1963,18 +2315,113 @@
       canvas.renderAll();
     }
 
+    // =========================================================================
+    // BOTÃO "GARANTIR MINHA VAGA" SEPARADO E MOVÍVEL NA ARTE
+    // =========================================================================
+    function construirBotaoCtaSeparado() {
+      if (!canvas || !canvas.width) return;
+
+      let posLeft = canvas.width * 0.5;
+      let posTop = canvas.height * 0.90;
+      let scalePrevX = 1;
+      let scalePrevY = 1;
+
+      if (grupoCtaPromoObj) {
+        posLeft = grupoCtaPromoObj.left;
+        posTop = grupoCtaPromoObj.top;
+        scalePrevX = grupoCtaPromoObj.scaleX;
+        scalePrevY = grupoCtaPromoObj.scaleY;
+        canvas.remove(grupoCtaPromoObj);
+        grupoCtaPromoObj = null;
+      }
+
+      const cta = document.getElementById('promoCta').value;
+      if (cta.trim() === '') {
+        canvas.renderAll();
+        return;
+      }
+
+      const baseW = Math.min(canvas.width * 0.90, 340);
+      const ctaW = baseW * 0.92;
+      const ctaH = baseW * 0.145;
+
+      const rectCta = new fabric.Rect({
+        width: ctaW,
+        height: ctaH,
+        rx: ctaH / 2,
+        ry: ctaH / 2,
+        fill: corDestaquePromo,
+        originX: 'center',
+        originY: 'center',
+        left: 0,
+        top: 0,
+        shadow: new fabric.Shadow({ color: 'rgba(0,0,0,0.35)', blur: 10, offsetX: 0, offsetY: 4 })
+      });
+
+      const txtCta = new fabric.Text(cta, {
+        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+        fontWeight: '800',
+        fontSize: ctaH * 0.46,
+        fill: '#ffffff',
+        originX: 'center',
+        originY: 'center',
+        left: 0,
+        top: 0
+      });
+
+      grupoCtaPromoObj = new fabric.Group([rectCta, txtCta], {
+        originX: 'center',
+        originY: 'center',
+        left: posLeft,
+        top: posTop,
+        scaleX: scalePrevX,
+        scaleY: scalePrevY,
+        cornerColor: '#ff6b00',
+        cornerStrokeColor: '#ffffff',
+        borderColor: '#ff6b00',
+        cornerSize: 10,
+        transparentCorners: false
+      });
+
+      canvas.add(grupoCtaPromoObj);
+      canvas.renderAll();
+    }
+
     function atualizarBlocoPromocao() {
       if (tipoMidiaAtual === 'promocao') {
         construirBlocoPromocao();
       }
     }
 
-    function construirEstruturaPadrao(alturaFaixa) {
+    function atualizarBotaoCtaSeparado() {
+      if (tipoMidiaAtual === 'promocao') {
+        construirBotaoCtaSeparado();
+      }
+    }
+
+    function alterarCorDestaquePromo(cor) {
+      corDestaquePromo = cor;
+      if (tipoMidiaAtual === 'promocao') {
+        construirBlocoPromocao();
+        construirBotaoCtaSeparado();
+      }
+    }
+
+    function alterarCorValorPromo(cor) {
+      corValorPromo = cor;
+      if (tipoMidiaAtual === 'promocao') {
+        construirBlocoPromocao();
+      }
+    }
+
+    function construirEstruturaPadrao(metricas) {
+      const { alturaBase, alturaTopo, tamanhoFonteTopo } = metricas;
+
       faixaTopoObj = new fabric.Rect({
         left: 0,
         top: 0,
         width: canvas.width,
-        height: alturaFaixa,
+        height: alturaTopo,
         fill: corFaixaAtual,
         selectable: false,
         evented: false
@@ -1982,26 +2429,24 @@
       canvas.add(faixaTopoObj);
 
       const textoTopoValor = document.getElementById('inputTextoTopo').value;
-      const tamanhoFonteBase = (formatoAtual === 'shorts')
-        ? Math.max(canvas.width * 0.048, 12)
-        : Math.max(alturaFaixa * 0.38, 14);
-
-      textoTopoObj = new fabric.IText(textoTopoValor, {
+      textoTopoObj = new fabric.Text(textoTopoValor, {
         fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
         fontWeight: '800',
-        fontSize: tamanhoFonteBase,
+        fontSize: tamanhoFonteTopo,
+        lineHeight: 1.18,
         fill: corLetraAtual,
         textAlign: 'center',
-        shadow: 'rgba(0,0,0,0.3) 0 2px 4px'
+        selectable: false,
+        evented: false
       });
       canvas.add(textoTopoObj);
-      ajustarEscalaTextoTopo();
+      posicionarTextoTopoFixo(alturaTopo);
 
       faixaBaseObj = new fabric.Rect({
         left: 0,
-        top: canvas.height - alturaFaixa,
+        top: canvas.height - alturaBase,
         width: canvas.width,
-        height: alturaFaixa,
+        height: alturaBase,
         fill: corFaixaAtual,
         selectable: false,
         evented: false
@@ -2013,7 +2458,7 @@
 
       fabric.loadSVGFromString(svgWhatsApp, function(objects, options) {
         iconeWhatsObj = fabric.util.groupSVGElements(objects, options);
-        const tamanhoIcone = alturaFaixa * 0.42;
+        const tamanhoIcone = alturaBase * 0.42;
         iconeWhatsObj.scaleToWidth(tamanhoIcone);
         iconeWhatsObj.set({
           originY: 'center',
@@ -2023,10 +2468,10 @@
           visible: exibirIcone
         });
 
-        textoTelefoneObj = new fabric.IText(telefoneValor, {
+        textoTelefoneObj = new fabric.Text(telefoneValor, {
           fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
           fontWeight: '700',
-          fontSize: Math.max(alturaFaixa * 0.35, 13),
+          fontSize: Math.max(alturaBase * 0.35, 13),
           fill: corLetraAtual,
           originY: 'center',
           left: exibirIcone ? (tamanhoIcone + 10) : 0,
@@ -2034,40 +2479,30 @@
         });
 
         grupoWhatsAppObj = new fabric.Group([iconeWhatsObj, textoTelefoneObj], {
-          shadow: 'rgba(0,0,0,0.3) 0 2px 4px'
+          selectable: false,
+          evented: false
         });
-
         canvas.add(grupoWhatsAppObj);
         grupoWhatsAppObj.centerH();
-        grupoWhatsAppObj.set({ top: (canvas.height - alturaFaixa) + (alturaFaixa - grupoWhatsAppObj.height) / 2 });
+        grupoWhatsAppObj.set({ top: (canvas.height - alturaBase) + (alturaBase - grupoWhatsAppObj.height) / 2 });
         canvas.renderAll();
       });
     }
 
-    function ajustarEscalaTextoTopo() {
+    function posicionarTextoTopoFixo(alturaTopo) {
       if (!textoTopoObj || !faixaTopoObj) return;
-      const margemLateral = canvas.width * 0.90;
-      textoTopoObj.set('scaleX', 1);
-      textoTopoObj.set('scaleY', 1);
-
-      if (textoTopoObj.width > margemLateral) {
-        const fator = margemLateral / textoTopoObj.width;
-        textoTopoObj.set({ scaleX: fator, scaleY: fator });
-      }
-
+      textoTopoObj.set({ scaleX: 1, scaleY: 1 });
       textoTopoObj.centerH();
-      textoTopoObj.set({ top: (faixaTopoObj.height - textoTopoObj.getScaledHeight()) / 2 });
+      textoTopoObj.set({ top: (alturaTopo - textoTopoObj.height) / 2 });
     }
 
     function atualizarTextoTopo(valor) {
       if (tipoMidiaAtual === 'video') {
-        document.getElementById('videoFaixaTopo').innerText = valor;
+        ajustarPalcoVideo();
         return;
       }
-      if (textoTopoObj) {
-        textoTopoObj.set('text', valor);
-        ajustarEscalaTextoTopo();
-        canvas.renderAll();
+      if (imagemCarregadaObj) {
+        ajustarCanvasNaTela();
       }
     }
 
@@ -2108,10 +2543,6 @@
 
     function alterarCorFaixas(cor) {
       corFaixaAtual = cor;
-      if (tipoMidiaAtual === 'promocao') {
-        corDestaquePromo = (cor === '#ffffff' || cor.startsWith('rgba(15')) ? '#ff6b00' : cor;
-        construirBlocoPromocao();
-      }
       if (tipoMidiaAtual === 'video') {
         document.getElementById('videoFaixaTopo').style.background = cor;
         document.getElementById('videoFaixaBase').style.background = cor;
@@ -2145,6 +2576,9 @@
       canvas.clear();
       imagemCarregadaObj = null;
       grupoPromocaoObj = null;
+      grupoCtaPromoObj = null;
+      seloSazonalObj = null;
+      seloSazonalChaveAtual = null;
     }
 
     function gerarDataURLAltaQualidade() {
@@ -2155,7 +2589,7 @@
       if (formatoAtual === 'shorts') {
         multiplicador = Math.max(1080 / canvas.width, 2);
       } else if (imagemCarregadaObj) {
-        multiplicador = Math.max(imagemCarregadaObj.width / canvas.width, 2);
+        multiplicador = Math.max((imagemCarregadaObj.width || 1080) / canvas.width, 2);
       }
 
       return canvas.toDataURL({
@@ -2219,14 +2653,16 @@
           document.getElementById('txtIndicadorCarrossel').innerText =
             `Baixando ${i + 1} de ${listaArquivosCarrossel.length}...`;
 
-          fabric.Image.fromURL(urlLamina, function(img) {
-            imagemCarregadaObj = img;
+          const imgNativa = new Image();
+          imgNativa.onload = function() {
+            imagemCarregadaObj = new fabric.Image(imgNativa, { selectable: false, evented: false });
             ajustarCanvasNaTela();
             setTimeout(() => {
               baixarImagemFinal();
               resolve();
             }, 350);
-          });
+          };
+          imgNativa.src = urlLamina;
         });
       }
 
@@ -2256,9 +2692,14 @@
       }
 
       const ctx = offCanvas.getContext('2d');
-      const alturaFaixa = Math.round(offCanvas.height * 0.11);
       const textoTopo = document.getElementById('inputTextoTopo').value;
+      const linhasTopo = textoTopo.split('\n');
       const telefone = document.getElementById('inputTelefone').value;
+
+      const alturaBase = Math.round(offCanvas.height * 0.10);
+      const tamanhoFonte = Math.round(alturaBase * 0.34);
+      const alturaLinha = Math.round(tamanhoFonte * 1.22);
+      const alturaTopo = Math.max(alturaBase, (linhasTopo.length * alturaLinha) + 24);
 
       videoEl.loop = false;
       videoEl.currentTime = 0;
@@ -2300,28 +2741,33 @@
         ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, offCanvas.width, offCanvas.height);
 
-        const areaH = offCanvas.height - (alturaFaixa * 2);
+        const areaH = offCanvas.height - alturaTopo - alturaBase;
         const scale = Math.min(offCanvas.width / vw, areaH / vh);
         const drawW = vw * scale;
         const drawH = vh * scale;
         const drawX = (offCanvas.width - drawW) / 2;
-        const drawY = alturaFaixa + (areaH - drawH) / 2;
+        const drawY = alturaTopo + (areaH - drawH) / 2;
 
         ctx.drawImage(videoEl, drawX, drawY, drawW, drawH);
 
         ctx.fillStyle = corFaixaAtual;
-        ctx.fillRect(0, 0, offCanvas.width, alturaFaixa);
+        ctx.fillRect(0, 0, offCanvas.width, alturaTopo);
         ctx.fillStyle = corLetraAtual;
-        ctx.font = `800 ${Math.round(alturaFaixa * 0.34)}px "Plus Jakarta Sans", Arial, sans-serif`;
+        ctx.font = `800 ${tamanhoFonte}px "Plus Jakarta Sans", Arial, sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(textoTopo, offCanvas.width / 2, alturaFaixa / 2, offCanvas.width * 0.9);
+
+        const blocoTextoH = linhasTopo.length * alturaLinha;
+        const inicioY = (alturaTopo - blocoTextoH) / 2 + (alturaLinha / 2);
+        linhasTopo.forEach((linha, idx) => {
+          ctx.fillText(linha, offCanvas.width / 2, inicioY + (idx * alturaLinha));
+        });
 
         ctx.fillStyle = corFaixaAtual;
-        ctx.fillRect(0, offCanvas.height - alturaFaixa, offCanvas.width, alturaFaixa);
+        ctx.fillRect(0, offCanvas.height - alturaBase, offCanvas.width, alturaBase);
         ctx.fillStyle = corLetraAtual;
-        ctx.font = `700 ${Math.round(alturaFaixa * 0.34)}px "Plus Jakarta Sans", Arial, sans-serif`;
-        ctx.fillText(telefone, offCanvas.width / 2, offCanvas.height - (alturaFaixa / 2), offCanvas.width * 0.9);
+        ctx.font = `700 ${tamanhoFonte}px "Plus Jakarta Sans", Arial, sans-serif`;
+        ctx.fillText(telefone, offCanvas.width / 2, offCanvas.height - (alturaBase / 2), offCanvas.width * 0.9);
 
         requestAnimationFrame(desenharFrame);
       }
