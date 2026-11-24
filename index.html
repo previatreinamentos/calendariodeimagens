@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Calendário de Postagens</title>
+  <title>Calendário de Postagens & Promoções</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
   <style>
     :root {
@@ -21,6 +21,8 @@
       --accent-green-hover: #059669;
       --accent-purple: #7c3aed;
       --accent-purple-hover: #6d28d9;
+      --accent-orange: #ff6b00;
+      --accent-orange-hover: #e55a00;
       --text: #0f172a;
       --text-muted: #64748b;
       --gold-bg: #fffbeb;
@@ -45,6 +47,7 @@
       background-color: var(--bg);
       color: var(--text);
       padding: 16px;
+      padding-bottom: 48px;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -157,11 +160,60 @@
       border-color: #f59e0b;
       box-shadow: 0 8px 18px rgba(245, 158, 11, 0.22);
     }
+    .card-dia.card-promo {
+      border-color: #fed7aa;
+    }
+    .card-dia.card-promo:hover {
+      border-color: var(--accent-orange);
+      box-shadow: 0 8px 18px rgba(255, 107, 0, 0.18);
+    }
+
+    /* Seção de Promoções abaixo do calendário */
+    .secao-promocoes {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 2px dashed var(--border);
+    }
+    .secao-promocoes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffffff 100%);
+      padding: 14px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid #fed7aa;
+      box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .secao-promocoes-header h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #9a3412;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .secao-promocoes-header p {
+      font-size: 0.82rem;
+      color: #c2410c;
+      font-weight: 500;
+    }
+    .badge-promo {
+      background: var(--accent-orange);
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+    }
 
     /* Thumbnails e Prévia de Vídeo */
     .thumb-wrapper {
       width: 100%;
-      height: 150px;
+      height: 155px;
       background: var(--surface-subtle);
       display: flex;
       align-items: center;
@@ -235,6 +287,10 @@
       flex-direction: column;
       gap: 2px;
     }
+    .info-evento-card.promo-info {
+      background: #fff7ed;
+      border-top-color: #fed7aa;
+    }
     .info-evento-card .titulo-evento {
       font-size: 0.75rem;
       font-weight: 700;
@@ -245,12 +301,18 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    .info-evento-card.promo-info .titulo-evento {
+      color: #9a3412;
+    }
     .info-evento-card .eixo-evento {
       font-size: 0.65rem;
       font-weight: 600;
       color: #92400e;
       text-transform: uppercase;
       letter-spacing: 0.03em;
+    }
+    .info-evento-card.promo-info .eixo-evento {
+      color: #c2410c;
     }
     .sem-arte {
       color: var(--text-muted);
@@ -287,9 +349,9 @@
 
     /* Barra Lateral Esquerda */
     .sidebar {
-      width: 350px;
-      min-width: 320px;
-      max-width: 370px;
+      width: 375px;
+      min-width: 340px;
+      max-width: 400px;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
@@ -328,6 +390,83 @@
       background: #fee2e2;
       color: #ef4444;
       border-color: #fca5a5;
+    }
+
+    /* Painel Exclusivo de Promoção na Sidebar */
+    .promo-controls-box {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      background: #fff7ed;
+      border: 1.5px solid #fdba74;
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+    .promo-controls-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #9a3412;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .promo-controls-title small {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: #c2410c;
+      text-transform: none;
+    }
+    .promo-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .promo-grid-preco {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 8px;
+    }
+    .promo-controls-box input[type="text"] {
+      background: #ffffff;
+      border-color: #fed7aa;
+    }
+    .promo-controls-box input[type="text"]:focus {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+    }
+    .input-valor-destaque {
+      font-size: 1.15rem !important;
+      font-weight: 900 !important;
+      color: #0f172a !important;
+      letter-spacing: -0.02em;
+    }
+    .modalidade-pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+    .btn-mod {
+      padding: 6px 4px;
+      border: 1px solid #fed7aa;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #9a3412;
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-mod:hover {
+      background: #ffedd5;
+    }
+    .btn-mod.active {
+      background: var(--accent-orange);
+      color: #ffffff;
+      border-color: var(--accent-orange);
     }
 
     /* Navegação do Carrossel na Sidebar */
@@ -401,7 +540,7 @@
       align-items: center;
     }
     .form-group label {
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -410,19 +549,19 @@
     .form-group input[type="text"],
     .form-group textarea {
       width: 100%;
-      padding: 8px 12px;
+      padding: 8px 11px;
       background: var(--surface-subtle);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
       font-family: inherit;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
       transition: all 0.2s;
     }
     .form-group textarea {
       resize: vertical;
-      min-height: 76px;
+      min-height: 74px;
       line-height: 1.4;
     }
     .form-group input[type="text"]:focus,
@@ -495,7 +634,7 @@
       border: 1px solid var(--border);
     }
 
-    /* Toggle WhatsApp */
+    /* Toggle WhatsApp e Faixas */
     .toggle-row {
       display: flex;
       align-items: center;
@@ -692,7 +831,7 @@
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-        max-height: 52vh;
+        max-height: 54vh;
         border-right: none;
         border-top: 1px solid var(--border);
         box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
@@ -700,7 +839,7 @@
       }
       .editor-stage {
         flex: 1;
-        max-height: 48vh;
+        max-height: 46vh;
         padding: 6px;
       }
     }
@@ -726,6 +865,17 @@
 
   <div id="grade" class="grid-calendario"></div>
 
+  <!-- SEÇÃO DE IMAGENS PARA PROMOÇÕES (ABAIXO DO CALENDÁRIO) -->
+  <section class="secao-promocoes">
+    <div class="secao-promocoes-header">
+      <div>
+        <h2>🏷️ Artes de Promoções & Ofertas</h2>
+        <p>Clique em uma arte promocional para editar valores, "De / Por", categoria (Carro/Moto) e textos no centro da imagem</p>
+      </div>
+    </div>
+    <div id="gradePromocoes" class="grid-calendario"></div>
+  </section>
+
   <!-- MODAL DE EDIÇÃO -->
   <div id="modalEditor">
     <div class="editor-wrapper">
@@ -750,6 +900,61 @@
           <span class="eixo" id="txtEventoEixo">--</span>
         </div>
 
+        <!-- CONTROLES ESPECÍFICOS DE PROMOÇÃO (BLOCO CENTRAL) -->
+        <div class="promo-controls-box" id="boxControlesPromo">
+          <div class="promo-controls-title">
+            <span>🏷️ Oferta no Meio da Imagem</span>
+            <small>Arraste na arte para mover</small>
+          </div>
+
+          <div class="promo-grid-2">
+            <div class="form-group">
+              <label>Chamada da Oferta</label>
+              <input type="text" id="promoChamada" value="2 aulas por" oninput="atualizarBlocoPromocao()">
+            </div>
+            <div class="form-group">
+              <label>Faixa "De / Por"</label>
+              <input type="text" id="promoDePor" value="De R$350,00 por" oninput="atualizarBlocoPromocao()">
+            </div>
+          </div>
+
+          <div class="promo-grid-preco">
+            <div class="form-group">
+              <label>Valor Principal (Maior)</label>
+              <input type="text" id="promoValor" class="input-valor-destaque" value="249" oninput="atualizarBlocoPromocao()">
+            </div>
+            <div class="form-group">
+              <label>Centavos</label>
+              <input type="text" id="promoCentavos" value=",99" oninput="atualizarBlocoPromocao()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Modalidade (Carro / Moto)</label>
+            <div class="modalidade-pills">
+              <button type="button" class="btn-mod" id="btnModCarro" onclick="selecionarModalidade('SÓ CARRO\n(CAT. B)', this)">Só Carro</button>
+              <button type="button" class="btn-mod" id="btnModMoto" onclick="selecionarModalidade('SÓ MOTO\n(CAT. A)', this)">Só Moto</button>
+              <button type="button" class="btn-mod active" id="btnModAmbos" onclick="selecionarModalidade('CARRO OU\nMOTO (A/B)', this)">Carro e Moto</button>
+            </div>
+            <input type="text" id="promoModalidade" value="CARRO OU MOTO (A/B)" oninput="atualizarBlocoPromocao()">
+          </div>
+
+          <div class="form-group">
+            <label>Selo 1 (Credenciamento)</label>
+            <input type="text" id="promoSelo1" value="Instrutor credenciado pelo Detran" oninput="atualizarBlocoPromocao()">
+          </div>
+
+          <div class="form-group">
+            <label>Selo 2 (Localidade / Benefício)</label>
+            <input type="text" id="promoSelo2" value="Busca e leva de volta em Francisco Morato" oninput="atualizarBlocoPromocao()">
+          </div>
+
+          <div class="form-group">
+            <label>Botão de Ação (CTA)</label>
+            <input type="text" id="promoCta" value="Garantir minha vaga" oninput="atualizarBlocoPromocao()">
+          </div>
+        </div>
+
         <!-- Seletor de Formato -->
         <div class="form-group">
           <label>Formato da Publicação</label>
@@ -763,6 +968,15 @@
               Shorts (9:16)
             </button>
           </div>
+        </div>
+
+        <!-- Opção de exibir ou ocultar as faixas (útil para promoções com arte cheia) -->
+        <div class="toggle-row" id="rowToggleFaixas" style="display: none;">
+          <span>Exibir faixas no topo e base</span>
+          <label class="switch">
+            <input type="checkbox" id="chkExibirFaixas" checked onchange="alternarFaixasTopoBase(this.checked)">
+            <span class="slider"></span>
+          </label>
         </div>
 
         <!-- Texto Superior -->
@@ -802,16 +1016,15 @@
 
         <!-- Cores das Faixas -->
         <div class="form-group">
-          <label>Cor das Faixas (Topo & Base)</label>
+          <label>Cor das Faixas / Destaque</label>
           <div class="palette-row">
             <div class="color-dot" style="background: rgba(15, 23, 42, 0.94);" title="Grafite Escuro" onclick="alterarCorFaixas('rgba(15, 23, 42, 0.94)')"></div>
+            <div class="color-dot" style="background: #ff6b00;" title="Laranja Promoção" onclick="alterarCorFaixas('#ff6b00')"></div>
             <div class="color-dot" style="background: #2563eb;" title="Azul Royal" onclick="alterarCorFaixas('#2563eb')"></div>
             <div class="color-dot" style="background: #10b981;" title="Verde Esmeralda" onclick="alterarCorFaixas('#10b981')"></div>
             <div class="color-dot" style="background: #e11d48;" title="Vermelho Vibrante" onclick="alterarCorFaixas('#e11d48')"></div>
-            <div class="color-dot" style="background: #ea580c;" title="Laranja Solar" onclick="alterarCorFaixas('#ea580c')"></div>
             <div class="color-dot" style="background: #ec4899;" title="Rosa Choque" onclick="alterarCorFaixas('#ec4899')"></div>
             <div class="color-dot" style="background: #9333ea;" title="Roxo Profundo" onclick="alterarCorFaixas('#9333ea')"></div>
-            <div class="color-dot" style="background: #c084fc;" title="Lilás Pastel" onclick="alterarCorFaixas('#c084fc')"></div>
             <div class="color-dot" style="background: #84cc16;" title="Verde Limão" onclick="alterarCorFaixas('#84cc16')"></div>
             <div class="color-dot" style="background: #f59e0b;" title="Âmbar" onclick="alterarCorFaixas('#f59e0b')"></div>
             <div class="color-dot" style="background: #ffffff;" title="Branco Puro" onclick="alterarCorFaixas('#ffffff')"></div>
@@ -834,40 +1047,24 @@
         </div>
 
         <div class="sidebar-actions">
-          <!-- Botões para Imagem / Carrossel -->
-          <div id="acoesImagem">
-            <button class="btn btn-share" style="margin-bottom: 8px;" onclick="compartilharOuBaixar()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-              Compartilhar no Celular
-            </button>
-            <button class="btn btn-primary" onclick="baixarImagemFinal()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Baixar Lâmina Atual
-            </button>
-            <button class="btn btn-purple" id="btnBaixarTodasCarrossel" style="display: none; margin-top: 8px;" onclick="baixarTodasLaminasCarrossel()">
-              📑 Baixar Todas do Carrossel
-            </button>
-          </div>
-
-          <!-- Botões exclusivos para Vídeo -->
-          <div id="acoesVideo" style="display: none;">
-            <button class="btn btn-purple" id="btnExportarVideo" onclick="exportarVideoComFaixas()">
-              🎬 Baixar Vídeo com Faixas
-            </button>
-          </div>
-
+          <button class="btn btn-share" onclick="compartilharOuBaixar()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Compartilhar no Celular
+          </button>
+          <button class="btn btn-primary" onclick="baixarImagemFinal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar Imagem Final
+          </button>
           <button class="btn btn-subtle" onclick="fecharEditor()">Voltar ao Calendário</button>
         </div>
       </div>
 
       <!-- PALCO DE VISUALIZAÇÃO -->
       <div class="editor-stage" id="stageContainer">
-        <!-- Canvas para Imagens e Carrosséis -->
         <div id="wrapperCanvasFabric">
           <canvas id="canvasFabric"></canvas>
         </div>
 
-        <!-- Palco para Vídeos -->
         <div class="video-stage-box" id="videoStageBox">
           <div class="video-faixa" id="videoFaixaTopo">SEU TEXTO PRINCIPAL AQUI</div>
           <div class="video-media-area">
@@ -889,22 +1086,86 @@
     let canvas;
     let nomeArquivoAtual = 'arte-editada.png';
     let dataChaveAtual = '';
-    let tipoMidiaAtual = 'imagem'; // 'imagem', 'carrossel' ou 'video'
+    let tipoMidiaAtual = 'imagem'; // 'imagem', 'carrossel', 'video' ou 'promocao'
     let listaArquivosCarrossel = [];
     let indiceCarrosselAtual = 0;
 
     let imagemCarregadaObj = null;
     let faixaTopoObj, faixaBaseObj, textoTopoObj;
     let grupoWhatsAppObj, textoTelefoneObj, iconeWhatsObj;
+    let grupoPromocaoObj = null;
 
     let formatoAtual = 'feed';
     let corFaixaAtual = 'rgba(15, 23, 42, 0.94)';
     let corLetraAtual = '#ffffff';
+    let corDestaquePromo = '#ff6b00';
 
     const svgWhatsApp = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <path fill="#25D366" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
       </svg>`;
+
+    // =========================================================================
+    // CONFIGURAÇÃO DAS ARTES DE PROMOÇÕES (arquivos promo-1.jpg, promo-2.jpg...)
+    // =========================================================================
+    const artesPromocoes = [
+      {
+        arquivoBase: "promo-1",
+        titulo: "Oferta Especial / Black Friday",
+        subtitulo: "Modelo Carro ou Moto",
+        chamada: "2 aulas por",
+        dePor: "De R$350,00 por",
+        valor: "249",
+        centavos: ",99",
+        modalidade: "CARRO OU\nMOTO (A/B)",
+        selo1: "Instrutor credenciado pelo Detran",
+        selo2: "Busca e leva de volta em Francisco Morato",
+        cta: "Garantir minha vaga",
+        legenda: "🔥 PROMOÇÃO IMPERDÍVEL!\n\nAproveite nossa condição especial: 2 aulas práticas de R$ 350,00 por apenas R$ 249,99 (Carro ou Moto)! 🚗🏍️\n\n✅ Instrutor credenciado pelo Detran\n✅ Busca e leva de volta em Francisco Morato\n\nGaranta já a sua vaga! 👇"
+      },
+      {
+        arquivoBase: "promo-2",
+        titulo: "Pacote Aulas de Direção",
+        subtitulo: "Habilitados / Primeira Habilitação",
+        chamada: "Pacote com 5 aulas",
+        dePor: "De R$650,00 por",
+        valor: "499",
+        centavos: ",00",
+        modalidade: "SÓ CARRO\n(CAT. B)",
+        selo1: "Instrutor credenciado pelo Detran",
+        selo2: "Atendimento personalizado",
+        cta: "Quero aproveitar",
+        legenda: "🚗 Perca o medo de dirigir com segurança!\n\nPacote promocional de 5 aulas práticas de R$ 650,00 por R$ 499,00!\n\nChame no WhatsApp e agende seu horário! 👇"
+      },
+      {
+        arquivoBase: "promo-3",
+        titulo: "Promoção Categoria A (Moto)",
+        subtitulo: "Treinamento em Pista",
+        chamada: "3 aulas por",
+        dePor: "De R$420,00 por",
+        valor: "299",
+        centavos: ",90",
+        modalidade: "SÓ MOTO\n(CAT. A)",
+        selo1: "Instrutor credenciado pelo Detran",
+        selo2: "Aulas práticas com foco no exame",
+        cta: "Reservar horário",
+        legenda: "🏍️ Conquiste sua habilitação de moto com confiança!\n\n3 aulas práticas de R$ 420,00 por R$ 299,90!\n\nFale conosco agora mesmo! 👇"
+      },
+      {
+        arquivoBase: "promo-4",
+        titulo: "Super Oferta Relâmpago",
+        subtitulo: "Vagas Limitadas",
+        chamada: "Aula avulsa por",
+        dePor: "De R$150,00 por",
+        valor: "119",
+        centavos: ",90",
+        modalidade: "CARRO OU\nMOTO (A/B)",
+        selo1: "Instrutor credenciado pelo Detran",
+        selo2: "Busca e leva de volta em Francisco Morato",
+        cta: "Garantir minha vaga",
+        legenda: "⚡ OFERTA RELÂMPAGO!\n\nAula prática avulsa de R$ 150,00 por apenas R$ 119,90!\n\nVagas limitadas. Clique e garanta a sua! 👇"
+      }
+    ];
 
     const legendasPorData = {
       "2026-11-20": `Você sabia que a cor da sua roupa à noite pode salvar a sua vida? 👀🌙\n\n⚫ Preto: Invisível\n🔵 Azul: 16m\n🔴 Vermelho: 24m\n🟡 Amarelo: 37m\n⚪ Branco: 55m\n🟢 Verde / Refletivo: 130m!\n\n#TransitoSeguro #SegurancaViaria`
@@ -947,6 +1208,7 @@
     window.onload = function() {
       canvas = new fabric.Canvas('canvasFabric', { selection: true });
       atualizarGradeDoMes();
+      carregarGradePromocoes();
 
       document.addEventListener('fullscreenchange', redimensionarAoMudarTamanho);
       document.addEventListener('webkitfullscreenchange', redimensionarAoMudarTamanho);
@@ -987,7 +1249,6 @@
       atualizarGradeDoMes();
     }
 
-    // Verifica se um arquivo existe na pasta usando Image ou Video
     function verificarImagemExiste(url) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -1007,17 +1268,12 @@
       });
     }
 
-    // Detecta automaticamente se o dia tem: Vídeo, Carrossel (-1, -2...) ou Imagem Única
     async function detectarMidiaDoDia(baseNome) {
-      // 1. Testa se existe vídeo (.mp4 ou .webm)
       for (const ext of ['.mp4', '.webm']) {
         const videoUrl = await verificarVideoExiste(`${baseNome}${ext}`);
-        if (videoUrl) {
-          return { tipo: 'video', arquivos: [videoUrl] };
-        }
+        if (videoUrl) return { tipo: 'video', arquivos: [videoUrl] };
       }
 
-      // 2. Testa se existe carrossel (baseNome-1.jpg, baseNome-2.jpg, ...)
       const laminas = [];
       for (let i = 1; i <= 10; i++) {
         let achouLamina = null;
@@ -1025,22 +1281,14 @@
           achouLamina = await verificarImagemExiste(`${baseNome}-${i}${ext}`);
           if (achouLamina) break;
         }
-        if (achouLamina) {
-          laminas.push(achouLamina);
-        } else {
-          break;
-        }
+        if (achouLamina) laminas.push(achouLamina);
+        else break;
       }
-      if (laminas.length > 0) {
-        return { tipo: 'carrossel', arquivos: laminas };
-      }
+      if (laminas.length > 0) return { tipo: 'carrossel', arquivos: laminas };
 
-      // 3. Testa imagem única padrão (baseNome.jpg, .png...)
       for (const ext of ['.jpg.jpg', '.jpg', '.jpeg', '.png']) {
         const imgUrl = await verificarImagemExiste(`${baseNome}${ext}`);
-        if (imgUrl) {
-          return { tipo: 'imagem', arquivos: [imgUrl] };
-        }
+        if (imgUrl) return { tipo: 'imagem', arquivos: [imgUrl] };
       }
 
       return null;
@@ -1089,7 +1337,6 @@
         `;
         grade.appendChild(card);
 
-        // Detecção assíncrona das mídias do dia
         detectarMidiaDoDia(baseNome).then((midia) => {
           const thumbEl = document.getElementById(`thumb-${baseNome}`);
           const badgesEl = document.getElementById(`badges-${baseNome}`);
@@ -1116,6 +1363,49 @@
       }
     }
 
+    // =========================================================================
+    // CARREGAMENTO DA GRADE DE PROMOÇÕES ABAIXO DO CALENDÁRIO
+    // =========================================================================
+    async function carregarGradePromocoes() {
+      const gradePromo = document.getElementById('gradePromocoes');
+      gradePromo.innerHTML = '';
+
+      for (let i = 0; i < artesPromocoes.length; i++) {
+        const promo = artesPromocoes[i];
+        const card = document.createElement('div');
+        card.className = 'card-dia card-promo';
+        card.innerHTML = `
+          <div class="dia-tag">Oferta #${i + 1}</div>
+          <div class="badges-direita">
+            <div class="badge-promo">🏷️ Promoção</div>
+          </div>
+          <div class="thumb-wrapper" id="thumb-promo-${i}">
+            <span class="sem-arte">Carregando...</span>
+          </div>
+          <div class="info-evento-card promo-info">
+            <span class="titulo-evento">${promo.titulo}</span>
+            <span class="eixo-evento">${promo.subtitulo}</span>
+          </div>
+        `;
+        gradePromo.appendChild(card);
+
+        let urlEncontrada = null;
+        for (const ext of ['.jpg', '.png', '.jpeg', '.jpg.jpg']) {
+          urlEncontrada = await verificarImagemExiste(`${promo.arquivoBase}${ext}`);
+          if (urlEncontrada) break;
+        }
+
+        const thumbEl = document.getElementById(`thumb-promo-${i}`);
+        if (urlEncontrada) {
+          thumbEl.innerHTML = `<img src="${urlEncontrada}" alt="${promo.titulo}">`;
+          card.onclick = () => abrirPromocaoNoEditor(urlEncontrada, promo);
+        } else {
+          thumbEl.innerHTML = `<span class="sem-arte">Adicione ${promo.arquivoBase}.jpg</span>`;
+          card.style.cursor = 'default';
+        }
+      }
+    }
+
     function alterarFormato(novoFormato) {
       formatoAtual = novoFormato;
       document.getElementById('btnFormatoFeed').classList.toggle('active', novoFormato === 'feed');
@@ -1128,11 +1418,61 @@
       }
     }
 
+    // Abre uma arte de Promoção no Editor com o bloco central de valores editável
+    function abrirPromocaoNoEditor(urlImagem, promoData) {
+      tipoMidiaAtual = 'promocao';
+      dataChaveAtual = promoData.arquivoBase;
+      listaArquivosCarrossel = [urlImagem];
+      indiceCarrosselAtual = 0;
+
+      const telefoneAtual = document.getElementById('inputTelefone').value;
+
+      // Preenche os campos do bloco promocional
+      document.getElementById('promoChamada').value = promoData.chamada;
+      document.getElementById('promoDePor').value = promoData.dePor;
+      document.getElementById('promoValor').value = promoData.valor;
+      document.getElementById('promoCentavos').value = promoData.centavos;
+      document.getElementById('promoModalidade').value = promoData.modalidade.replace('\n', ' ');
+      document.getElementById('promoSelo1').value = promoData.selo1;
+      document.getElementById('promoSelo2').value = promoData.selo2;
+      document.getElementById('promoCta').value = promoData.cta;
+
+      // Atualiza botões de modalidade
+      document.getElementById('btnModCarro').classList.toggle('active', promoData.modalidade.includes('SÓ CARRO'));
+      document.getElementById('btnModMoto').classList.toggle('active', promoData.modalidade.includes('SÓ MOTO'));
+      document.getElementById('btnModAmbos').classList.toggle('active', promoData.modalidade.includes('CARRO OU'));
+
+      document.getElementById('inputTextoTopo').value = promoData.titulo.toUpperCase();
+      document.getElementById('inputLegenda').value = `${promoData.legenda}\n\n📲 WhatsApp: ${telefoneAtual}`;
+
+      // Ajusta visibilidade dos painéis da sidebar
+      document.getElementById('tituloSidebarEditor').innerText = 'Editar Promoção';
+      document.getElementById('boxControlesPromo').style.display = 'flex';
+      document.getElementById('rowToggleFaixas').style.display = 'flex';
+      document.getElementById('chkExibirFaixas').checked = false; // Por padrão oculta as faixas na promoção para não cobrir o título da arte (mas pode ativar se quiser)
+
+      document.getElementById('boxCarrosselNav').style.display = 'none';
+      document.getElementById('boxEventoDestaque').style.display = 'none';
+      document.getElementById('btnBaixarTodasCarrossel').style.display = 'none';
+      document.getElementById('acoesImagem').style.display = 'block';
+      document.getElementById('acoesVideo').style.display = 'none';
+      document.getElementById('wrapperCanvasFabric').style.display = 'block';
+      document.getElementById('videoStageBox').style.display = 'none';
+
+      document.getElementById('modalEditor').style.display = 'flex';
+      carregarLaminaAtualNoCanvas();
+    }
+
     function abrirNoEditor(midia, eventoInfo, dataChave) {
       tipoMidiaAtual = midia.tipo;
       dataChaveAtual = dataChave;
       listaArquivosCarrossel = midia.arquivos;
       indiceCarrosselAtual = 0;
+
+      // Esconde painel exclusivo de promoções
+      document.getElementById('boxControlesPromo').style.display = 'none';
+      document.getElementById('rowToggleFaixas').style.display = 'none';
+      document.getElementById('chkExibirFaixas').checked = true;
 
       const boxDestaque = document.getElementById('boxEventoDestaque');
       const inputLegenda = document.getElementById('inputLegenda');
@@ -1148,7 +1488,6 @@
         document.getElementById('inputTextoTopo').value = 'SEU TEXTO PRINCIPAL AQUI';
       }
 
-      // Preenche a legenda
       if (dataChave && legendasPorData[dataChave]) {
         inputLegenda.value = `${legendasPorData[dataChave]}\n\n📲 WhatsApp: ${telefoneAtual}`;
       } else if (eventoInfo && eventoInfo.legenda) {
@@ -1159,7 +1498,6 @@
         inputLegenda.value = `Confira nossa dica de hoje! 🚗✨\n\n📲 Entre em contato pelo WhatsApp: ${telefoneAtual}\n\n#Transito #DirecaoDefensiva #Seguranca`;
       }
 
-      // Configura interface conforme o tipo de mídia (Vídeo vs Carrossel vs Imagem)
       const isVideo = (tipoMidiaAtual === 'video');
       const isCarrossel = (tipoMidiaAtual === 'carrossel');
 
@@ -1185,6 +1523,18 @@
       } else {
         carregarLaminaAtualNoCanvas();
       }
+    }
+
+    function selecionarModalidade(textoMod, botao) {
+      document.querySelectorAll('.btn-mod').forEach(b => b.classList.remove('active'));
+      if (botao) botao.classList.add('active');
+      document.getElementById('promoModalidade').value = textoMod.replace('\n', ' ');
+      atualizarBlocoPromocao();
+    }
+
+    function alternarFaixasTopoBase(ativo) {
+      if (!imagemCarregadaObj) return;
+      ajustarCanvasNaTela();
     }
 
     function mudarLaminaCarrossel(delta) {
@@ -1304,11 +1654,14 @@
       canvas.clear();
       canvas.setBackgroundColor('#0f172a', canvas.renderAll.bind(canvas));
 
-      const alturaFaixa = (formatoAtual === 'shorts')
-        ? Math.max(canvasH * 0.10, 44)
-        : Math.max(canvasH * 0.125, 48);
+      const exibirFaixas = (tipoMidiaAtual !== 'promocao') || document.getElementById('chkExibirFaixas').checked;
 
-      const espacoUtilH = canvasH - (alturaFaixa * 2) - 8;
+      const alturaFaixa = exibirFaixas
+        ? ((formatoAtual === 'shorts') ? Math.max(canvasH * 0.10, 44) : Math.max(canvasH * 0.125, 48))
+        : 0;
+
+      const espacoUtilH = exibirFaixas ? (canvasH - (alturaFaixa * 2) - 8) : canvasH;
+      const offsetTopo = exibirFaixas ? (alturaFaixa + 4) : 0;
 
       if (formatoAtual === 'shorts') {
         imagemCarregadaObj.clone(function(bgImg) {
@@ -1344,7 +1697,7 @@
           scaleX: escalaPrincipal,
           scaleY: escalaPrincipal,
           left: (canvasW - imgW) / 2,
-          top: alturaFaixa + 4 + (espacoUtilH - imgH) / 2,
+          top: offsetTopo + (espacoUtilH - imgH) / 2,
           shadow: 'rgba(0,0,0,0.45) 0 10px 25px',
           selectable: false,
           evented: false
@@ -1357,7 +1710,7 @@
           scaleX: escalaW,
           scaleY: escalaH,
           left: 0,
-          top: alturaFaixa + 4,
+          top: offsetTopo,
           shadow: null,
           selectable: false,
           evented: false
@@ -1365,7 +1718,255 @@
       }
 
       canvas.add(imagemCarregadaObj);
-      construirEstruturaPadrao(alturaFaixa);
+
+      if (exibirFaixas) {
+        construirEstruturaPadrao(alturaFaixa);
+      } else {
+        faixaTopoObj = null;
+        faixaBaseObj = null;
+        textoTopoObj = null;
+        grupoWhatsAppObj = null;
+      }
+
+      // Se for uma arte de promoção, constrói o bloco central editável
+      if (tipoMidiaAtual === 'promocao') {
+        construirBlocoPromocao();
+      }
+    }
+
+    // =========================================================================
+    // CONSTRUÇÃO DO BLOCO PROMOCIONAL CENTRAL (IGUAL À IMAGEM DE REFERÊNCIA)
+    // =========================================================================
+    function construirBlocoPromocao() {
+      let posLeft = canvas.width * 0.5;
+      let posTop = canvas.height * 0.72;
+      let scalePrevX = 1;
+      let scalePrevY = 1;
+
+      if (grupoPromocaoObj) {
+        posLeft = grupoPromocaoObj.left;
+        posTop = grupoPromocaoObj.top;
+        scalePrevX = grupoPromocaoObj.scaleX;
+        scalePrevY = grupoPromocaoObj.scaleY;
+        canvas.remove(grupoPromocaoObj);
+      }
+
+      const chamada = document.getElementById('promoChamada').value;
+      const dePor = document.getElementById('promoDePor').value;
+      const valor = document.getElementById('promoValor').value;
+      const centavos = document.getElementById('promoCentavos').value;
+      const modalidadeRaw = document.getElementById('promoModalidade').value;
+      const selo1 = document.getElementById('promoSelo1').value;
+      const selo2 = document.getElementById('promoSelo2').value;
+      const cta = document.getElementById('promoCta').value;
+
+      // Quebra modalidade em 2 linhas se for "CARRO OU MOTO (A/B)" para manter o visual compacto ao lado do preço
+      let modalidadeFormatada = modalidadeRaw;
+      if (modalidadeRaw.toUpperCase() === 'CARRO OU MOTO (A/B)') {
+        modalidadeFormatada = 'CARRO OU\nMOTO (A/B)';
+      }
+
+      const baseW = Math.min(canvas.width * 0.88, 340);
+      const elementos = [];
+
+      // 1. Chamada superior ("2 aulas por")
+      const txtChamada = new fabric.Text(chamada, {
+        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+        fontWeight: '800',
+        fontSize: baseW * 0.088,
+        fill: '#ffffff',
+        left: -baseW * 0.44,
+        top: -baseW * 0.46,
+        shadow: 'rgba(0,0,0,0.75) 0 2px 6px'
+      });
+      elementos.push(txtChamada);
+
+      // 2. Pílula branca "De R$350,00 por"
+      if (dePor.trim() !== '') {
+        const pillDePorW = baseW * 0.44;
+        const pillDePorH = baseW * 0.085;
+        const rectDePor = new fabric.Rect({
+          width: pillDePorW,
+          height: pillDePorH,
+          rx: pillDePorH / 2,
+          ry: pillDePorH / 2,
+          fill: 'rgba(255, 255, 255, 0.94)',
+          left: baseW * 0.04,
+          top: -baseW * 0.445,
+          shadow: 'rgba(0,0,0,0.3) 0 2px 6px'
+        });
+
+        const txtDePor = new fabric.Text(dePor, {
+          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+          fontWeight: '700',
+          fontSize: pillDePorH * 0.50,
+          fill: corDestaquePromo,
+          originX: 'center',
+          originY: 'center',
+          left: baseW * 0.04 + pillDePorW / 2,
+          top: -baseW * 0.445 + pillDePorH / 2
+        });
+
+        // Linha de riscado sobre o valor antigo
+        const linhaRisco = new fabric.Line([
+          baseW * 0.04 + pillDePorW * 0.18,
+          -baseW * 0.445 + pillDePorH / 2,
+          baseW * 0.04 + pillDePorW * 0.76,
+          -baseW * 0.445 + pillDePorH / 2
+        ], {
+          stroke: '#0f172a',
+          strokeWidth: 1.5
+        });
+
+        elementos.push(rectDePor, txtDePor, linhaRisco);
+      }
+
+      // 3. Valor Gigante ("249")
+      const txtValor = new fabric.Text(valor, {
+        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+        fontWeight: '900',
+        fontSize: baseW * 0.34,
+        fill: '#ffffff',
+        left: -baseW * 0.46,
+        top: -baseW * 0.38,
+        charSpacing: -30,
+        shadow: 'rgba(0,0,0,0.65) 0 4px 12px'
+      });
+      elementos.push(txtValor);
+
+      // 4. Centavos elevados (",99")
+      const txtCentavos = new fabric.Text(centavos, {
+        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+        fontWeight: '900',
+        fontSize: baseW * 0.145,
+        fill: '#ffffff',
+        left: baseW * 0.15,
+        top: -baseW * 0.34,
+        shadow: 'rgba(0,0,0,0.65) 0 3px 8px'
+      });
+      elementos.push(txtCentavos);
+
+      // 5. Modalidade em laranja ("CARRO OU MOTO (A/B)")
+      const txtModalidade = new fabric.Text(modalidadeFormatada.toUpperCase(), {
+        fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+        fontWeight: '900',
+        fontSize: baseW * 0.062,
+        lineHeight: 1.05,
+        fill: corDestaquePromo,
+        left: baseW * 0.155,
+        top: -baseW * 0.175,
+        shadow: 'rgba(0,0,0,0.85) 0 2px 5px'
+      });
+      elementos.push(txtModalidade);
+
+      // 6. Selo 1 ("Instrutor credenciado pelo Detran")
+      if (selo1.trim() !== '') {
+        const s1W = baseW * 0.72;
+        const s1H = baseW * 0.072;
+        const rectS1 = new fabric.Rect({
+          width: s1W,
+          height: s1H,
+          rx: s1H / 2,
+          ry: s1H / 2,
+          fill: 'rgba(15, 23, 42, 0.55)',
+          stroke: 'rgba(255,255,255,0.75)',
+          strokeWidth: 1,
+          originX: 'center',
+          left: 0,
+          top: -baseW * 0.01
+        });
+        const txtS1 = new fabric.Text(selo1, {
+          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+          fontWeight: '600',
+          fontSize: s1H * 0.52,
+          fill: '#ffffff',
+          originX: 'center',
+          originY: 'center',
+          left: 0,
+          top: -baseW * 0.01 + s1H / 2
+        });
+        elementos.push(rectS1, txtS1);
+      }
+
+      // 7. Selo 2 ("Busca e leva de volta em Francisco Morato")
+      if (selo2.trim() !== '') {
+        const s2W = baseW * 0.88;
+        const s2H = baseW * 0.072;
+        const rectS2 = new fabric.Rect({
+          width: s2W,
+          height: s2H,
+          rx: s2H / 2,
+          ry: s2H / 2,
+          fill: 'rgba(15, 23, 42, 0.55)',
+          stroke: 'rgba(255,255,255,0.75)',
+          strokeWidth: 1,
+          originX: 'center',
+          left: 0,
+          top: baseW * 0.075
+        });
+        const txtS2 = new fabric.Text(selo2, {
+          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+          fontWeight: '600',
+          fontSize: s2H * 0.50,
+          fill: '#ffffff',
+          originX: 'center',
+          originY: 'center',
+          left: 0,
+          top: baseW * 0.075 + s2H / 2
+        });
+        elementos.push(rectS2, txtS2);
+      }
+
+      // 8. Botão CTA arredondado ("Garantir minha vaga")
+      if (cta.trim() !== '') {
+        const ctaW = baseW * 0.92;
+        const ctaH = baseW * 0.145;
+        const rectCta = new fabric.Rect({
+          width: ctaW,
+          height: ctaH,
+          rx: ctaH / 2,
+          ry: ctaH / 2,
+          fill: corDestaquePromo,
+          originX: 'center',
+          left: 0,
+          top: baseW * 0.175,
+          shadow: 'rgba(0,0,0,0.35) 0 4px 12px'
+        });
+        const txtCta = new fabric.Text(cta, {
+          fontFamily: "'Plus Jakarta Sans', Arial, sans-serif",
+          fontWeight: '800',
+          fontSize: ctaH * 0.48,
+          fill: '#ffffff',
+          originX: 'center',
+          originY: 'center',
+          left: 0,
+          top: baseW * 0.175 + ctaH / 2
+        });
+        elementos.push(rectCta, txtCta);
+      }
+
+      grupoPromocaoObj = new fabric.Group(elementos, {
+        originX: 'center',
+        originY: 'center',
+        left: posLeft,
+        top: posTop,
+        scaleX: scalePrevX,
+        scaleY: scalePrevY,
+        cornerColor: '#ff6b00',
+        cornerStrokeColor: '#ffffff',
+        borderColor: '#ff6b00',
+        cornerSize: 10,
+        transparentCorners: false
+      });
+
+      canvas.add(grupoPromocaoObj);
+      canvas.renderAll();
+    }
+
+    function atualizarBlocoPromocao() {
+      if (tipoMidiaAtual === 'promocao') {
+        construirBlocoPromocao();
+      }
     }
 
     function construirEstruturaPadrao(alturaFaixa) {
@@ -1507,6 +2108,10 @@
 
     function alterarCorFaixas(cor) {
       corFaixaAtual = cor;
+      if (tipoMidiaAtual === 'promocao') {
+        corDestaquePromo = (cor === '#ffffff' || cor.startsWith('rgba(15')) ? '#ff6b00' : cor;
+        construirBlocoPromocao();
+      }
       if (tipoMidiaAtual === 'video') {
         document.getElementById('videoFaixaTopo').style.background = cor;
         document.getElementById('videoFaixaBase').style.background = cor;
@@ -1539,6 +2144,7 @@
       videoEl.src = '';
       canvas.clear();
       imagemCarregadaObj = null;
+      grupoPromocaoObj = null;
     }
 
     function gerarDataURLAltaQualidade() {
@@ -1602,7 +2208,6 @@
       document.body.removeChild(link);
     }
 
-    // Baixa todas as lâminas de um carrossel sequencialmente com as mesmas cores e textos
     async function baixarTodasLaminasCarrossel() {
       if (tipoMidiaAtual !== 'carrossel') return;
 
@@ -1629,7 +2234,6 @@
         `Lâmina ${indiceCarrosselAtual + 1} de ${listaArquivosCarrossel.length}`;
     }
 
-    // Renderiza o vídeo + faixas superior e inferior em tempo real e faz o download
     async function exportarVideoComFaixas() {
       const videoEl = document.getElementById('videoPlayerEditor');
       const btnExportar = document.getElementById('btnExportarVideo');
@@ -1705,7 +2309,6 @@
 
         ctx.drawImage(videoEl, drawX, drawY, drawW, drawH);
 
-        // Faixa Superior
         ctx.fillStyle = corFaixaAtual;
         ctx.fillRect(0, 0, offCanvas.width, alturaFaixa);
         ctx.fillStyle = corLetraAtual;
@@ -1714,7 +2317,6 @@
         ctx.textBaseline = 'middle';
         ctx.fillText(textoTopo, offCanvas.width / 2, alturaFaixa / 2, offCanvas.width * 0.9);
 
-        // Faixa Inferior
         ctx.fillStyle = corFaixaAtual;
         ctx.fillRect(0, offCanvas.height - alturaFaixa, offCanvas.width, alturaFaixa);
         ctx.fillStyle = corLetraAtual;
